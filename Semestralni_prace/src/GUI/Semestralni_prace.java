@@ -19,6 +19,7 @@ public class Semestralni_prace extends javax.swing.JFrame {
     public Semestralni_prace() {
         initComponents();
         gr = new Graf();
+        gr.setLocation(490, 20);
         gr.setVisible(false);
     }
 
