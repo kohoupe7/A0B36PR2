@@ -1,5 +1,8 @@
-
 package graf;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import javax.swing.JColorChooser;
 
 /**
  *
@@ -7,11 +10,24 @@ package graf;
  */
 public class Graf extends javax.swing.JFrame {
 
+    private int a = 10;//okraje stránky
+    private int v = 1;//velikost bodu
+    private int pocetDilkuX = 30; 
+    private int pocetDilkuY = 30; 
+    private int nulaX, nulaY, krokX, krokY;
+    private Color barvaPismen = Color.RED;
+    private Color barvaGrafu = Color.GREEN;
+
     /**
      * Creates new form Graf
      */
     public Graf() {
         initComponents();
+        nulaX = jPanel1.getWidth() / 2;
+        nulaY = jPanel1.getHeight() / 2;
+        krokX = (jPanel1.getWidth()-nulaX-a)/pocetDilkuX;
+        krokY = (jPanel1.getHeight()-nulaY-a)/pocetDilkuY;
+        System.out.println(krokX);
     }
 
     /**
@@ -23,23 +39,170 @@ public class Graf extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        jToolBar1 = new javax.swing.JToolBar();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel() {
+            public void paint (Graphics g) {
+                super.paint(g);
+                kresli(g);
+            }
+        };
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        menuClrGr = new javax.swing.JMenuItem();
+        menuClrPop = new javax.swing.JMenuItem();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
         setLocationByPlatform(true);
+        setName("graf"); // NOI18N
+        setPreferredSize(new java.awt.Dimension(640, 480));
+        setResizable(false);
+
+        jToolBar1.setFloatable(false);
+        jToolBar1.setBorderPainted(false);
+
+        jButton1.setText("Tl1");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton1);
+
+        jButton2.setText("Tl2");
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton2);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 640, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 430, Short.MAX_VALUE)
+        );
+
+        jMenu1.setText("Úpravy");
+
+        menuClrGr.setText("Barva popisů");
+        menuClrGr.setActionCommand("pop");
+        menuClrGr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuColorAct(evt);
+            }
+        });
+        jMenu1.add(menuClrGr);
+
+        menuClrPop.setText("Barva grafu");
+        menuClrPop.setActionCommand("graf");
+        menuClrPop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuColorAct(evt);
+            }
+        });
+        jMenu1.add(menuClrPop);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 391, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 295, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void menuColorAct(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuColorAct
+        if (evt.getActionCommand() == "pop") {
+            barvaPismen = JColorChooser.showDialog(this, "Barva", barvaPismen);
+        } else if (evt.getActionCommand() == "graf") {
+            barvaGrafu = JColorChooser.showDialog(this, "Barva", barvaGrafu);
+        }
+        kresli(jPanel1.getGraphics());
+    }//GEN-LAST:event_menuColorAct
+
+    private void kresli(Graphics g) {
+        vykresliOsy(g);
+
+
+
+        String j = "10,10"; // souradnice oddelené čárkou
+        System.out.println(j);
+        int x = Integer.valueOf(j.substring(0, j.indexOf(',')));
+        int y = Integer.valueOf(j.substring(j.indexOf(',') + 1, j.length()));
+
+        g.drawLine(nulaX + x + v, nulaY - (y - v), nulaX + x - v, nulaY - (y + v));
+        g.drawLine(nulaX + x - v, nulaY - (y - v), nulaX + x + v, nulaY - (y + v));
+    }
+
+    private void vykresliOsy(Graphics g) {
+        g.drawLine(a, nulaY, jPanel1.getWidth() - a, nulaY);
+        g.drawLine(nulaX, a, nulaX, jPanel1.getHeight() - a); //Vykreslení souřadných os
+
+
+        for (int i = nulaX, kolikatej = 0; i <= jPanel1.getWidth() - a; i = i + krokX, kolikatej++) { // vykreslení měřítka osa X doprava
+            if (kolikatej % 5 == 0 && kolikatej != 0) {
+                g.setColor(barvaPismen);
+                g.drawLine(i, nulaY, i, nulaY + a);
+
+                g.drawString(String.valueOf(kolikatej), i - 3, nulaY + 2 * a + 3);
+                g.setColor(Color.black);
+            } else {
+                g.drawLine(i, nulaY, i, nulaY + (a / 2));
+            }
+        }
+        for (int i = nulaX, kolikatej = 0; i >= a; i = i - krokX, kolikatej++) { // vykreslení měřítka osa X doleva
+            if (kolikatej % 5 == 0 && kolikatej != 0) {
+                g.setColor(barvaPismen);
+                g.drawLine(i, nulaY, i, nulaY + a);
+
+                g.drawString("-" + String.valueOf(2*kolikatej/krokX), i - 8, nulaY + 2 * a + 3);
+                g.setColor(Color.black);
+            } else {
+                g.drawLine(i, nulaY, i, nulaY + (a / 2));
+            }
+        }
+
+        for (int j = nulaY, kolikatej = 0; j >= a; j = j - krokX, kolikatej++) { //vykreslení měřítka osa Y dolu
+            if (kolikatej % 5 == 0 && kolikatej != 0) {
+                g.setColor(barvaPismen);
+                g.drawLine(nulaX - a, j, nulaX, j);
+                g.drawString(String.valueOf(2*kolikatej/krokX), nulaX - 2 * a - 9, j + 5);
+                g.setColor(Color.black);
+            } else {
+                g.drawLine(nulaX - (a / 2), j, nulaX, j);
+            }
+
+        }
+        for (int j = nulaY, kolikatej = 0; j <= jPanel1.getHeight() - a; j = j + krokX, kolikatej++) { //vykreslení měřítka osa Y 
+            if (kolikatej % 5 == 0 && kolikatej != 0) {
+                g.setColor(barvaPismen);
+                g.drawLine(nulaX - a, j, nulaX, j);
+                g.drawString("-" + String.valueOf(2*kolikatej/krokX), nulaX - 2 * a - 15, j + 5);
+                g.setColor(Color.black);
+            } else {
+                g.drawLine(nulaX - (a / 2), j, nulaX, j);
+            }
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -76,5 +239,13 @@ public class Graf extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JMenuItem menuClrGr;
+    private javax.swing.JMenuItem menuClrPop;
     // End of variables declaration//GEN-END:variables
 }
