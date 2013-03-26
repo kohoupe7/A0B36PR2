@@ -19,9 +19,7 @@ public class Semestralni_prace extends javax.swing.JFrame {
     public Semestralni_prace() {
         initComponents();
         this.setSize(523, 260);
-        gr = new Graf();
-        gr.setLocation(490, 20);
-        gr.setVisible(false);
+        
     }
 
     /**
@@ -286,9 +284,9 @@ public class Semestralni_prace extends javax.swing.JFrame {
 
         chbxGraf.setText("graf");
         chbxGraf.setName("chbxGraf"); // NOI18N
-        chbxGraf.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                chbxGrafStateChanged(evt);
+        chbxGraf.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chbxGrafItemStateChanged(evt);
             }
         });
 
@@ -498,7 +496,7 @@ public class Semestralni_prace extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -514,10 +512,6 @@ public class Semestralni_prace extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void chbxGrafStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chbxGrafStateChanged
-        gr.setVisible(chbxGraf.isSelected());
-    }//GEN-LAST:event_chbxGrafStateChanged
 
     private void btnNumAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNumAction
         v.pridej(evt.getActionCommand());
@@ -556,6 +550,15 @@ public class Semestralni_prace extends javax.swing.JFrame {
         btnShowNext.setVisible(true);
         jPanel2.setVisible(false);
     }//GEN-LAST:event_btnHideNextActionPerformed
+
+    private void chbxGrafItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chbxGrafItemStateChanged
+        if(chbxGraf.isSelected()){
+       gr = new Graf();
+       gr.setVisible(true);
+       }else {
+       gr.dispose();
+       }// TODO add your handling code here:
+    }//GEN-LAST:event_chbxGrafItemStateChanged
 
     /**
      * @param args the command line arguments
