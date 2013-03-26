@@ -9,25 +9,33 @@ import javax.swing.JColorChooser;
  * @author Petr Kohout
  */
 public class Graf extends javax.swing.JFrame {
-
-    private int a = 10;//okraje stránky
-    private int v = 1;//velikost bodu
-    private int pocetDilkuX = 30; 
-    private int pocetDilkuY = 30; 
-    private int nulaX, nulaY, krokX, krokY;
-    private Color barvaPismen = Color.RED;
-    private Color barvaGrafu = Color.GREEN;
+    
+    private int a, v, velikostCarky, pocetDilkuX, pocetDilkuY, nulaX, nulaY, krokX, krokY, xStara, yStara;
+    private boolean stejneOsy;
+    private Color barvaPismen, barvaGrafu;
 
     /**
      * Creates new form Graf
      */
     public Graf() {
         initComponents();
-        nulaX = jPanel1.getWidth() / 2;
-        nulaY = jPanel1.getHeight() / 2;
-        krokX = (jPanel1.getWidth()-nulaX-a)/pocetDilkuX;
-        krokY = (jPanel1.getHeight()-nulaY-a)/pocetDilkuY;
-        System.out.println(krokX);
+        //Nastavení počátečních parametrů
+        a = 40;//okraje stránky
+        v = 1;//velikost bodu
+        velikostCarky = 10;
+        pocetDilkuX = 30;
+        pocetDilkuY = 30;
+        stejneOsy = true;
+        //Nastavení počátečních parametrů - end
+
+        barvaPismen = Color.RED;
+        barvaGrafu = Color.GREEN;
+        nulaX = vykreslovaciPlocha.getWidth() / 2;
+        nulaY = vykreslovaciPlocha.getHeight() / 2;
+        krokX = (vykreslovaciPlocha.getWidth() - 2 * a) / pocetDilkuX;
+        krokY = stejneOsy ? krokX : (vykreslovaciPlocha.getHeight() - 2 * a) / pocetDilkuY;
+        
+        
     }
 
     /**
@@ -42,7 +50,8 @@ public class Graf extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel() {
+        btnStejneOsy = new javax.swing.JToggleButton();
+        vykreslovaciPlocha = new javax.swing.JPanel() {
             public void paint (Graphics g) {
                 super.paint(g);
                 kresli(g);
@@ -55,10 +64,10 @@ public class Graf extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
+        setBackground(new java.awt.Color(255, 255, 255));
         setLocationByPlatform(true);
         setName("graf"); // NOI18N
         setPreferredSize(new java.awt.Dimension(640, 480));
-        setResizable(false);
 
         jToolBar1.setFloatable(false);
         jToolBar1.setBorderPainted(false);
@@ -75,16 +84,51 @@ public class Graf extends javax.swing.JFrame {
         jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton2);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        btnStejneOsy.setSelected(true);
+        btnStejneOsy.setText("Stejná měřítka");
+        btnStejneOsy.setFocusable(false);
+        btnStejneOsy.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnStejneOsy.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnStejneOsy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStejneOsyActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnStejneOsy);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        vykreslovaciPlocha.setBackground(new java.awt.Color(255, 255, 255));
+        vykreslovaciPlocha.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                vykreslovaciPlochaZoom(evt);
+            }
+        });
+        vykreslovaciPlocha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                vykreslovaciPlochaMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                vykreslovaciPlochaMouseReleased(evt);
+            }
+        });
+        vykreslovaciPlocha.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                vykreslovaciPlochaComponentResized(evt);
+            }
+        });
+        vykreslovaciPlocha.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                vykreslovaciPlochaMouseMoved(evt);
+            }
+        });
+
+        javax.swing.GroupLayout vykreslovaciPlochaLayout = new javax.swing.GroupLayout(vykreslovaciPlocha);
+        vykreslovaciPlocha.setLayout(vykreslovaciPlochaLayout);
+        vykreslovaciPlochaLayout.setHorizontalGroup(
+            vykreslovaciPlochaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 640, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        vykreslovaciPlochaLayout.setVerticalGroup(
+            vykreslovaciPlochaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 430, Short.MAX_VALUE)
         );
 
@@ -117,89 +161,143 @@ public class Graf extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(vykreslovaciPlocha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(vykreslovaciPlocha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuColorAct(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuColorAct
-        if (evt.getActionCommand() == "pop") {
-            barvaPismen = JColorChooser.showDialog(this, "Barva", barvaPismen);
-        } else if (evt.getActionCommand() == "graf") {
-            barvaGrafu = JColorChooser.showDialog(this, "Barva", barvaGrafu);
+        switch (evt.getActionCommand()) {
+            case "pop":
+                barvaPismen = JColorChooser.showDialog(this, "Barva", barvaPismen);
+                break;
+            case "graf":
+                barvaGrafu = JColorChooser.showDialog(this, "Barva", barvaGrafu);
+                break;
         }
-        kresli(jPanel1.getGraphics());
+        vykreslovaciPlocha.repaint();
     }//GEN-LAST:event_menuColorAct
+    
+    private void btnStejneOsyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStejneOsyActionPerformed
+        stejneOsy = !stejneOsy;
+        krokY = stejneOsy ? krokX : (vykreslovaciPlocha.getHeight() - 2 * a) / pocetDilkuY;
+        vykreslovaciPlocha.repaint();
+    }//GEN-LAST:event_btnStejneOsyActionPerformed
+    
+    private void vykreslovaciPlochaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vykreslovaciPlochaMousePressed
+        xStara = evt.getX();
+        yStara = evt.getY();
+    }//GEN-LAST:event_vykreslovaciPlochaMousePressed
+    
+    private void vykreslovaciPlochaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vykreslovaciPlochaMouseReleased
+        int xPosuv = xStara - evt.getX();
+        int yPosuv = yStara - evt.getY();
+        
+        nulaX = nulaX - xPosuv;
+        nulaY = nulaY - yPosuv;
+        vykreslovaciPlocha.repaint();
+        
+    }//GEN-LAST:event_vykreslovaciPlochaMouseReleased
+    
+    private void vykreslovaciPlochaZoom(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_vykreslovaciPlochaZoom
+        System.out.println(evt.getWheelRotation());
+        pocetDilkuX = evt.getWheelRotation() == 1 ? pocetDilkuX + 1 : pocetDilkuX - 1;
+        pocetDilkuY = evt.getWheelRotation() == 1 ? pocetDilkuY + 1 : pocetDilkuY - 1;
+        
+        krokX = (vykreslovaciPlocha.getWidth() - 2 * a) / pocetDilkuX;
+        krokY = stejneOsy ? krokX : (vykreslovaciPlocha.getHeight() - 2 * a) / pocetDilkuY;
+        vykreslovaciPlocha.repaint();
+    }//GEN-LAST:event_vykreslovaciPlochaZoom
+    
+    private void vykreslovaciPlochaComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_vykreslovaciPlochaComponentResized
+        krokX = (vykreslovaciPlocha.getWidth() - 2 * a) / pocetDilkuX;
+        krokY = stejneOsy ? krokX : (vykreslovaciPlocha.getHeight() - 2 * a) / pocetDilkuY;
+        vykreslovaciPlocha.repaint();
+    }//GEN-LAST:event_vykreslovaciPlochaComponentResized
+    
+    private void vykreslovaciPlochaMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vykreslovaciPlochaMouseMoved
+       vykreslovaciPlocha.repaint();
+        nakresliKurzCary(evt);
+        
+    }//GEN-LAST:event_vykreslovaciPlochaMouseMoved
+    private void nakresliKurzCary(java.awt.event.MouseEvent evt) {
+      
+        vykreslovaciPlocha.getGraphics().drawLine(evt.getX(), 0, evt.getX(), vykreslovaciPlocha.getHeight());
+        vykreslovaciPlocha.getGraphics().drawLine(0, evt.getY(), vykreslovaciPlocha.getWidth(), evt.getY());
+        
+    }
 
     private void kresli(Graphics g) {
+        
         vykresliOsy(g);
-
-
-
+        
+        
+        
         String j = "10,10"; // souradnice oddelené čárkou
-        System.out.println(j);
+//        System.out.println(j);
         int x = Integer.valueOf(j.substring(0, j.indexOf(',')));
         int y = Integer.valueOf(j.substring(j.indexOf(',') + 1, j.length()));
-
+        
         g.drawLine(nulaX + x + v, nulaY - (y - v), nulaX + x - v, nulaY - (y + v));
         g.drawLine(nulaX + x - v, nulaY - (y - v), nulaX + x + v, nulaY - (y + v));
     }
-
+    
     private void vykresliOsy(Graphics g) {
-        g.drawLine(a, nulaY, jPanel1.getWidth() - a, nulaY);
-        g.drawLine(nulaX, a, nulaX, jPanel1.getHeight() - a); //Vykreslení souřadných os
+        
+        g.drawLine(a, nulaY, vykreslovaciPlocha.getWidth() - a, nulaY);
+        g.drawLine(nulaX, a, nulaX, vykreslovaciPlocha.getHeight() - a); //Vykreslení souřadných os
 
-
-        for (int i = nulaX, kolikatej = 0; i <= jPanel1.getWidth() - a; i = i + krokX, kolikatej++) { // vykreslení měřítka osa X doprava
+        int dilkyXAkt = 0;
+        for (int i = nulaX, kolikatej = 0; i <= vykreslovaciPlocha.getWidth() - a; i = i + krokX, kolikatej++, dilkyXAkt++) { // vykreslení měřítka osa X doprava
             if (kolikatej % 5 == 0 && kolikatej != 0) {
                 g.setColor(barvaPismen);
-                g.drawLine(i, nulaY, i, nulaY + a);
-
-                g.drawString(String.valueOf(kolikatej), i - 3, nulaY + 2 * a + 3);
+                g.drawLine(i, nulaY, i, nulaY + velikostCarky);
+                
+                g.drawString(String.valueOf(kolikatej), i - 3, nulaY + 2 * velikostCarky + 3);
                 g.setColor(Color.black);
             } else {
-                g.drawLine(i, nulaY, i, nulaY + (a / 2));
+                g.drawLine(i, nulaY, i, nulaY + (velikostCarky / 2));
             }
         }
-        for (int i = nulaX, kolikatej = 0; i >= a; i = i - krokX, kolikatej++) { // vykreslení měřítka osa X doleva
+        for (int i = nulaX, kolikatej = 0; i >= a && dilkyXAkt < pocetDilkuX; i = i - krokX, kolikatej++, dilkyXAkt++) { // vykreslení měřítka osa X doleva
             if (kolikatej % 5 == 0 && kolikatej != 0) {
                 g.setColor(barvaPismen);
-                g.drawLine(i, nulaY, i, nulaY + a);
-
-                g.drawString("-" + String.valueOf(2*kolikatej/krokX), i - 8, nulaY + 2 * a + 3);
+                g.drawLine(i, nulaY, i, nulaY + velikostCarky);
+                
+                g.drawString("-" + String.valueOf(kolikatej), i - 8, nulaY + 2 * velikostCarky + 3);
                 g.setColor(Color.black);
             } else {
-                g.drawLine(i, nulaY, i, nulaY + (a / 2));
+                g.drawLine(i, nulaY, i, nulaY + (velikostCarky / 2));
             }
         }
-
-        for (int j = nulaY, kolikatej = 0; j >= a; j = j - krokX, kolikatej++) { //vykreslení měřítka osa Y dolu
+        
+        for (int j = nulaY, kolikatej = 0; j >= a; j = j - krokY, kolikatej++) { //vykreslení měřítka osa Y dolu
             if (kolikatej % 5 == 0 && kolikatej != 0) {
                 g.setColor(barvaPismen);
-                g.drawLine(nulaX - a, j, nulaX, j);
-                g.drawString(String.valueOf(2*kolikatej/krokX), nulaX - 2 * a - 9, j + 5);
+                g.drawLine(nulaX - velikostCarky, j, nulaX, j);
+                g.drawString(String.valueOf(kolikatej), nulaX - 2 * velikostCarky - 9, j + 5);
                 g.setColor(Color.black);
             } else {
-                g.drawLine(nulaX - (a / 2), j, nulaX, j);
+                g.drawLine(nulaX - (velikostCarky / 2), j, nulaX, j);
             }
-
+            
         }
-        for (int j = nulaY, kolikatej = 0; j <= jPanel1.getHeight() - a; j = j + krokX, kolikatej++) { //vykreslení měřítka osa Y 
+        for (int j = nulaY, kolikatej = 0; j <= vykreslovaciPlocha.getHeight() - a; j = j + krokY, kolikatej++) { //vykreslení měřítka osa Y 
             if (kolikatej % 5 == 0 && kolikatej != 0) {
                 g.setColor(barvaPismen);
-                g.drawLine(nulaX - a, j, nulaX, j);
-                g.drawString("-" + String.valueOf(2*kolikatej/krokX), nulaX - 2 * a - 15, j + 5);
+                g.drawLine(nulaX - velikostCarky, j, nulaX, j);
+                g.drawString("-" + String.valueOf(kolikatej), nulaX - 2 * velikostCarky - 15, j + 5);
                 g.setColor(Color.black);
             } else {
-                g.drawLine(nulaX - (a / 2), j, nulaX, j);
+                g.drawLine(nulaX - (velikostCarky / 2), j, nulaX, j);
             }
         }
     }
@@ -239,13 +337,14 @@ public class Graf extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton btnStejneOsy;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuItem menuClrGr;
     private javax.swing.JMenuItem menuClrPop;
+    private javax.swing.JPanel vykreslovaciPlocha;
     // End of variables declaration//GEN-END:variables
 }
