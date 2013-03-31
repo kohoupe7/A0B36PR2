@@ -18,7 +18,6 @@ public class Semestralni_prace extends javax.swing.JFrame {
      */
     public Semestralni_prace() {
         initComponents();
-        this.setSize(523, 260);
         
     }
 
@@ -64,10 +63,6 @@ public class Semestralni_prace extends javax.swing.JFrame {
         chbxGraf = new javax.swing.JCheckBox();
         txtVyraz = new javax.swing.JTextField();
         btnBackspace = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        btnHideNext = new javax.swing.JButton();
-        btnShowNext = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuExit = new javax.swing.JMenuItem();
@@ -419,49 +414,6 @@ public class Semestralni_prace extends javax.swing.JFrame {
             }
         });
 
-        jPanel2.setVisible(false);
-        jPanel2.setBorder(null);
-
-        jLabel1.setText("Polynomy");
-
-        btnHideNext.setFont(new java.awt.Font("Cantarell", 0, 15)); // NOI18N
-        btnHideNext.setPreferredSize(new java.awt.Dimension(15, 28));
-        btnHideNext.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHideNextActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addComponent(jLabel1)
-                .addContainerGap(96, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnHideNext, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(btnHideNext, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
-        );
-
-        btnShowNext.setFont(new java.awt.Font("Cantarell", 0, 15)); // NOI18N
-        btnShowNext.setPreferredSize(new java.awt.Dimension(15, 28));
-        btnShowNext.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnShowNextActionPerformed(evt);
-            }
-        });
-
         jMenu1.setText("File");
 
         menuExit.setText("Exit");
@@ -485,28 +437,18 @@ public class Semestralni_prace extends javax.swing.JFrame {
                         .addComponent(txtVyraz, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnBackspace, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnShowNext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtVyraz, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBackspace))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnShowNext, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(24, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtVyraz, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBackspace))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -538,18 +480,6 @@ public class Semestralni_prace extends javax.swing.JFrame {
         v.odeber();
         txtVyraz.setText(v.getVyraz());
     }//GEN-LAST:event_btnBackspaceAction
-
-    private void btnShowNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowNextActionPerformed
-       this.setSize(758, 260);
-        btnShowNext.setVisible(false);
-        jPanel2.setVisible(true);
-    }//GEN-LAST:event_btnShowNextActionPerformed
-
-    private void btnHideNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHideNextActionPerformed
-        this.setSize(523, 260);
-        btnShowNext.setVisible(true);
-        jPanel2.setVisible(false);
-    }//GEN-LAST:event_btnHideNextActionPerformed
 
     private void chbxGrafItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chbxGrafItemStateChanged
         if(chbxGraf.isSelected()){
@@ -610,7 +540,6 @@ public class Semestralni_prace extends javax.swing.JFrame {
     private javax.swing.JButton btnDeleno;
     private javax.swing.JButton btnE;
     private javax.swing.JButton btnFakt;
-    private javax.swing.JButton btnHideNext;
     private javax.swing.JButton btnKrat;
     private javax.swing.JButton btnLn;
     private javax.swing.JButton btnLog;
@@ -619,7 +548,6 @@ public class Semestralni_prace extends javax.swing.JFrame {
     private javax.swing.JButton btnPi;
     private javax.swing.JButton btnPlus;
     private javax.swing.JButton btnRovno;
-    private javax.swing.JButton btnShowNext;
     private javax.swing.JButton btnSin;
     private javax.swing.JButton btnSqrt;
     private javax.swing.JButton btnTecka;
@@ -628,12 +556,10 @@ public class Semestralni_prace extends javax.swing.JFrame {
     private javax.swing.JButton btnZavL;
     private javax.swing.JButton btnZavP;
     private javax.swing.JCheckBox chbxGraf;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JMenuItem menuExit;
     private javax.swing.JTextField txtVyraz;
     // End of variables declaration//GEN-END:variables

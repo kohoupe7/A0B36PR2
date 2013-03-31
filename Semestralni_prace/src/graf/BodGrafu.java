@@ -17,21 +17,22 @@ public class BodGrafu {
 
     public BodGrafu(double x) {
         this.x = x;
-        y = hodnotaVBode(x);
+        y = -1 * hodnotaVBode(x);
     }
 
     public BodGrafu(double x, int nulaX, int krokX, int nulaY, int krokY, Graphics g, int velikost, Color barva) {
         this.x = x;
         y = hodnotaVBode(x);
-       //System.out.println(x);
-        g.setColor(barva);
-    //g.fillOval((int)x-velikost, (int)Math.round(nulaY+y*krokY)-velikost, (int)x, (int)Math.round(nulaY+y*krokY)+velikost);
+        //System.out.println(x);
+        g.setColor(Color.GREEN);
+        int souradniceX = Tools.sourToPx(x, nulaX, krokX);
+        int souradniceY = Tools.sourToPx(-1 * y, nulaY, krokY);
+        g.fillOval(souradniceX - velikost / 2, souradniceY - velikost / 2, velikost, velikost);
     }
-    
 
     private double hodnotaVBode(double x) {
-        
-        
+
+
         return Math.sin(x);
     }
 
@@ -42,10 +43,9 @@ public class BodGrafu {
     public double getY() {
         return y;
     }
-    
+
     @Override
     public String toString() {
-        return x+" "+y; //To change body of generated methods, choose Tools | Templates.
+        return x + " " + y; //To change body of generated methods, choose Tools | Templates.
     }
-    
 }
