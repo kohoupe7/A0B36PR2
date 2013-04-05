@@ -20,13 +20,13 @@ public class BodGrafu {
         y = -1 * hodnotaVBode(x);
     }
 
-    public BodGrafu(double x, int nulaX, int krokX, int nulaY, int krokY, Graphics g, int velikost, Color barva) {
+    public BodGrafu(double x, int nulaX, int krokX, int nulaY, int krokY, Graphics g, int velikost, Color barva, double hodnotaDilkuX, double hodnotaDilkuy) {
         this.x = x;
         y = hodnotaVBode(x);
         //System.out.println(x);
         g.setColor(Color.GREEN);
-        int souradniceX = Tools.sourToPx(x, nulaX, krokX);
-        int souradniceY = Tools.sourToPx(-1 * y, nulaY, krokY);
+        int souradniceX = Tools.sourToPx(x, nulaX, krokX,hodnotaDilkuX);
+        int souradniceY = Tools.sourToPx(-1 * y, nulaY, krokY,hodnotaDilkuy);
         g.fillOval(souradniceX - velikost / 2, souradniceY - velikost / 2, velikost, velikost);
     }
 

@@ -60,11 +60,11 @@ public class Prubeh {
 
     private void vykresli() {
         int souradniceX1, souradniceX2, souradniceY1, souradniceY2;  
-        souradniceX1 = Tools.sourToPx(bod.get(0).getX(), nulaX, krokX);
-        souradniceY1 = Tools.sourToPx(bod.get(0).getY(), nulaY, krokY);  
+        souradniceX1 = Tools.sourToPx(bod.get(0).getX(), nulaX, krokX,Graf.getHodnotaDilku('x'));
+        souradniceY1 = Tools.sourToPx(bod.get(0).getY(), nulaY, krokY,Graf.getHodnotaDilku('y'));  
         for (int i = 1; i < bod.size(); i++) {
-            souradniceX2 = Tools.sourToPx(bod.get(i).getX(), nulaX, krokX);
-            souradniceY2 = Tools.sourToPx(bod.get(i).getY(), nulaY, krokY);
+            souradniceX2 = Tools.sourToPx(bod.get(i).getX(), nulaX, krokX,Graf.getHodnotaDilku('x'));
+            souradniceY2 = Tools.sourToPx(bod.get(i).getY(), nulaY, krokY,Graf.getHodnotaDilku('y'));
             g.setColor(barva);
             g.drawLine(souradniceX1, souradniceY1, souradniceX2, souradniceY2);
             souradniceX1 = souradniceX2;

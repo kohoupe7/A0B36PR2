@@ -16,7 +16,7 @@ public class Graf extends javax.swing.JFrame {
     private int xMysiPosledni = 0, yMysiPosledni = 0;
     private boolean stejneOsy, mysUvnitr = false;
     private Color barvaPismen, barvaGrafu;
-
+    private static double hodnotaDilkuX, hodnotaDilkuY;
     /**
      * Creates new form Graf
      */
@@ -31,6 +31,10 @@ public class Graf extends javax.swing.JFrame {
         stejneOsy = true;
         //Nastavení počátečních parametrů - end
 
+        hodnotaDilkuX=1;
+        hodnotaDilkuY=1;
+        
+        
         barvaPismen = Color.RED;
         barvaGrafu = Color.GREEN;
         nulaX = vykreslovaciPlocha.getWidth() / 2;
@@ -53,7 +57,6 @@ public class Graf extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        btnStejneOsy = new javax.swing.JToggleButton();
         vykreslovaciPlocha = new javax.swing.JPanel() {
             public void paint (Graphics g) {
                 super.paint(g);
@@ -70,6 +73,9 @@ public class Graf extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         lblPolX = new javax.swing.JLabel();
         lblPolY = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        chbxZoomX = new javax.swing.JCheckBox();
+        chbxZoomY = new javax.swing.JCheckBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuClrGr = new javax.swing.JMenuItem();
@@ -85,29 +91,17 @@ public class Graf extends javax.swing.JFrame {
         jToolBar1.setFloatable(false);
         jToolBar1.setBorderPainted(false);
 
-        jButton1.setText("Tl1");
+        jButton1.setText("Uložit");
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton1);
 
-        jButton2.setText("Tl2");
+        jButton2.setText("Tisk");
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton2);
-
-        btnStejneOsy.setSelected(true);
-        btnStejneOsy.setText("Stejná měřítka");
-        btnStejneOsy.setFocusable(false);
-        btnStejneOsy.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnStejneOsy.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnStejneOsy.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnStejneOsyActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(btnStejneOsy);
 
         vykreslovaciPlocha.setBackground(new java.awt.Color(255, 255, 255));
         vykreslovaciPlocha.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -220,7 +214,7 @@ public class Graf extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(lblPolY, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(25, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addComponent(lblPolX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel3Layout.setVerticalGroup(
@@ -233,6 +227,38 @@ public class Graf extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(lblPolY)))
+        );
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Zoom"));
+        jPanel4.setFocusable(false);
+        jPanel4.setMinimumSize(new java.awt.Dimension(117, 65));
+
+        chbxZoomX.setText("Zoom X");
+        chbxZoomX.setFocusPainted(false);
+        chbxZoomX.setFocusable(false);
+
+        chbxZoomY.setText("Zoom Y");
+        chbxZoomY.setFocusPainted(false);
+        chbxZoomY.setFocusable(false);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(chbxZoomX)
+                    .addComponent(chbxZoomY))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(chbxZoomX)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(chbxZoomY))
         );
 
         jMenu1.setText("Úpravy");
@@ -269,7 +295,8 @@ public class Graf extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -285,7 +312,9 @@ public class Graf extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(363, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(275, Short.MAX_VALUE))))
         );
 
         pack();
@@ -302,12 +331,6 @@ public class Graf extends javax.swing.JFrame {
         }
         vykreslovaciPlocha.repaint();
     }//GEN-LAST:event_menuColorAct
-
-    private void btnStejneOsyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStejneOsyActionPerformed
-        stejneOsy = !stejneOsy;
-        krokY = stejneOsy ? krokX : (vykreslovaciPlocha.getHeight() - 2 * a) / pocetDilkuY;
-        vykreslovaciPlocha.repaint();
-    }//GEN-LAST:event_btnStejneOsyActionPerformed
 
     private void vykreslovaciPlochaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vykreslovaciPlochaMousePressed
         xStara = evt.getX();
@@ -326,12 +349,12 @@ public class Graf extends javax.swing.JFrame {
     }//GEN-LAST:event_vykreslovaciPlochaMouseReleased
 
     private void vykreslovaciPlochaZoom(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_vykreslovaciPlochaZoom
-        pocetDilkuX = evt.getWheelRotation() == 1 ? pocetDilkuX + 1 : pocetDilkuX - 1;
-        pocetDilkuY = evt.getWheelRotation() == 1 ? pocetDilkuY + 1 : pocetDilkuY - 1;
-
-        krokX = (vykreslovaciPlocha.getWidth() - 2 * a) / pocetDilkuX; //TODO dělení nulou
-        krokY = stejneOsy ? krokX : (vykreslovaciPlocha.getHeight() - 2 * a) / pocetDilkuY;
+        
+        if(chbxZoomX.isSelected()){hodnotaDilkuX = evt.getWheelRotation() == 1 ? hodnotaDilkuX + 0.1*hodnotaDilkuX : hodnotaDilkuX - 0.1*hodnotaDilkuX;}
+        if(chbxZoomY.isSelected()){hodnotaDilkuY = evt.getWheelRotation() == 1 ? hodnotaDilkuY + 0.1*hodnotaDilkuY : hodnotaDilkuY - 0.1*hodnotaDilkuY;}
+        
         vykreslovaciPlocha.repaint();
+        
     }//GEN-LAST:event_vykreslovaciPlochaZoom
 
     private void vykreslovaciPlochaComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_vykreslovaciPlochaComponentResized
@@ -343,8 +366,8 @@ public class Graf extends javax.swing.JFrame {
     private void vykreslovaciPlochaMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vykreslovaciPlochaMouseMoved
         xMysiPosledni = evt.getX();
         yMysiPosledni = evt.getY();
-        polX.setText(String.format("%.3f", Tools.pxToSour(evt.getX(), nulaX, krokX, 'x')));
-        polY.setText(String.format("%.3f", Tools.pxToSour(evt.getY(), nulaY, krokY, 'y')));
+        polX.setText(String.format("%.3f", Tools.pxToSour(evt.getX(), nulaX, krokX, 'x',hodnotaDilkuX)));
+        polY.setText(String.format("%.3f", Tools.pxToSour(evt.getY(), nulaY, krokY, 'y', hodnotaDilkuY)));
         vykreslovaciPlocha.repaint();
     }//GEN-LAST:event_vykreslovaciPlochaMouseMoved
 
@@ -363,7 +386,7 @@ public class Graf extends javax.swing.JFrame {
             g.drawLine(xMysiPosledni, 0, xMysiPosledni, vykreslovaciPlocha.getHeight());
             g.drawLine(0, yMysiPosledni, vykreslovaciPlocha.getWidth(), yMysiPosledni);
 
-            BodGrafu b = new BodGrafu(Tools.pxToSour(xMysiPosledni, nulaX, krokX, 'x'), nulaX, krokX, nulaY, krokY, g, v, barvaGrafu);
+            BodGrafu b = new BodGrafu(Tools.pxToSour(xMysiPosledni, nulaX, krokX, 'x',hodnotaDilkuX), nulaX, krokX, nulaY, krokY, g, v, barvaGrafu,hodnotaDilkuX,hodnotaDilkuY);
             lblPolX.setText(String.format("%.3f", b.getX()));
             lblPolY.setText(String.format("%.3f", b.getY()));
         }
@@ -371,7 +394,7 @@ public class Graf extends javax.swing.JFrame {
         g.setColor(Color.BLACK);
         vykresliOsy(g);
 
-        Prubeh j = new Prubeh(Tools.pxToSour(a, nulaX, krokX, 'x'), Tools.pxToSour(vykreslovaciPlocha.getWidth() - a, nulaX, krokX, 'x'), 0.1, g, barvaGrafu, nulaX, nulaY, krokX, krokY);
+        Prubeh j = new Prubeh(Tools.pxToSour(a, nulaX, krokX, 'x',hodnotaDilkuX), Tools.pxToSour(vykreslovaciPlocha.getWidth() - a, nulaX, krokX, 'x',hodnotaDilkuX), 0.1, g, barvaGrafu, nulaX, nulaY, krokX, krokY);
 
     }
 
@@ -386,7 +409,7 @@ public class Graf extends javax.swing.JFrame {
                 g.setColor(barvaPismen);
                 g.drawLine(i, nulaY, i, nulaY + velikostCarky);
 
-                g.drawString(String.valueOf(kolikatej), i - 3, nulaY + 2 * velikostCarky + 3);
+                g.drawString(String.format("%.2f",kolikatej*hodnotaDilkuX), i - 3, nulaY + 2 * velikostCarky + 3);
                 g.setColor(Color.black);
             } else {
                 g.drawLine(i, nulaY, i, nulaY + (velikostCarky / 2));
@@ -397,7 +420,7 @@ public class Graf extends javax.swing.JFrame {
                 g.setColor(barvaPismen);
                 g.drawLine(i, nulaY, i, nulaY + velikostCarky);
 
-                g.drawString("-" + String.valueOf(kolikatej), i - 8, nulaY + 2 * velikostCarky + 3);
+                g.drawString("-" + String.format("%.2f",kolikatej*hodnotaDilkuX), i - 8, nulaY + 2 * velikostCarky + 3);
                 g.setColor(Color.black);
             } else {
                 g.drawLine(i, nulaY, i, nulaY + (velikostCarky / 2));
@@ -408,7 +431,7 @@ public class Graf extends javax.swing.JFrame {
             if (kolikatej % 5 == 0 && kolikatej != 0) {
                 g.setColor(barvaPismen);
                 g.drawLine(nulaX - velikostCarky, j, nulaX, j);
-                g.drawString(String.valueOf(kolikatej), nulaX - 2 * velikostCarky - 9, j + 5);
+                g.drawString(String.format("%.2f",kolikatej*hodnotaDilkuY), nulaX - 2 * velikostCarky - 9, j + 5);
                 g.setColor(Color.black);
             } else {
                 g.drawLine(nulaX - (velikostCarky / 2), j, nulaX, j);
@@ -419,7 +442,7 @@ public class Graf extends javax.swing.JFrame {
             if (kolikatej % 5 == 0 && kolikatej != 0) {
                 g.setColor(barvaPismen);
                 g.drawLine(nulaX - velikostCarky, j, nulaX, j);
-                g.drawString("-" + String.valueOf(kolikatej), nulaX - 2 * velikostCarky - 15, j + 5);
+                g.drawString("-" + String.format("%.2f",kolikatej*hodnotaDilkuY), nulaX - 2 * velikostCarky - 15, j + 5);
                 g.setColor(Color.black);
             } else {
                 g.drawLine(nulaX - (velikostCarky / 2), j, nulaX, j);
@@ -427,6 +450,9 @@ public class Graf extends javax.swing.JFrame {
         }
     }
 
+    public static double getHodnotaDilku(char ktery){
+    return ktery=='x'? hodnotaDilkuX:hodnotaDilkuY;
+    }
     /**
      * @param args the command line arguments
      */
@@ -462,7 +488,8 @@ public class Graf extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton btnStejneOsy;
+    private javax.swing.JCheckBox chbxZoomX;
+    private javax.swing.JCheckBox chbxZoomY;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -473,6 +500,7 @@ public class Graf extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblPolX;
     private javax.swing.JLabel lblPolY;
