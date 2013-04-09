@@ -38,7 +38,6 @@ public class Prubeh {
         for (double i = minimum; i <= maximum; i = i + krok) {
             BodGrafu k = new BodGrafu(i);
             bod.add(k);
-            //System.out.println(k);
         }
         vykresli();
     }

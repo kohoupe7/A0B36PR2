@@ -43,65 +43,6 @@ public class BinOp extends Expr {
         return vysledek;
     }
 
-    @Override
-    Expr derive(char var) {
-        switch (typ) {
-            case '+':
-                return new BinOp('+', vyraz1.derive(var), vyraz2.derive(var));
-            case '-':
-                return new BinOp('-', vyraz1.derive(var), vyraz2.derive(var));
-            case '*':
-                return new BinOp('+', new BinOp('*', vyraz1, vyraz2.derive(var)), new BinOp('*', vyraz2, vyraz1.derive(var)));
-            case '/':
-                return new BinOp('/', new BinOp('-', new BinOp('*', vyraz1.derive(var), vyraz2), new BinOp('*', vyraz1, vyraz2.derive(var))), new BinOp('*', vyraz2, vyraz2));
-        }
-        return null;
-    }
-
-    @Override
-    Expr simplify() {
-        Expr zj1, zj2;
-
-        zj1 = vyraz1.simplify();
-        zj2 = vyraz2.simplify();
-
-        switch (typ) {
-            case '+':
-                if ("du1.Constant".equals(zj1.getClass().getName())) {
-                    if (((Constant) zj1).getHodnota() == 0) {
-                        return zj2;
-                    }
-                }
-                if ("du1.Constant".equals(zj2.getClass().getName())) {
-                    if (((Constant) zj2).getHodnota() == 0) {
-                        return zj1;
-                    }
-                }
-                break;
-            case '*':
-                if ("du1.Constant".equals(zj1.getClass().getName())) {
-                    if (((Constant) zj1).getHodnota() == 0) {
-                        return new Constant(0);
-                    } else if (((Constant) zj1).getHodnota() == 1) {
-                        return zj2;
-                    }
-                }
-                if ("du1.Constant".equals(zj2.getClass().getName())) {
-                    if (((Constant) zj2).getHodnota() == 0) {
-                        return new Constant(0);
-                    } else if (((Constant) zj2).getHodnota() == 1) {
-                        return zj1;
-                    }
-                }
-
-
-                break;
-
-        }
-
-
-        return new BinOp(typ, zj1, zj2);
-    }
 
     @Override
     public String toString() {

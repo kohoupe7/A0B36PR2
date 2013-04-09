@@ -26,16 +26,6 @@ public class Constant extends Expr {
     }
 
     @Override
-    Expr derive(char var) {
-        return new Constant(0);
-    }
-
-    @Override
-    Expr simplify() {
-        return new Constant(hodnota);
-    }
-
-    @Override
     public String toString() {
         return String.format("%.3f", hodnota); // desetiná čárka/tečka ?
     }

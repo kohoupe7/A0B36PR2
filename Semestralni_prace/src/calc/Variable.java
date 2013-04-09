@@ -23,19 +23,7 @@ public class Variable extends Expr {
         return hodnota;
     }
 
-    @Override
-    Expr derive(char var) {
-        if (var == jmeno) {
-            return new Constant(1);
-        } else {
-            return new Constant(0);
-        }
-    }
 
-    @Override
-    Expr simplify() {
-        return new Variable(jmeno, hodnota);
-    }
 
     @Override
     public String toString() {

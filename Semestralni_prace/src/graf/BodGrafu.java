@@ -30,7 +30,7 @@ public class BodGrafu {
         g.fillOval(souradniceX - velikost / 2, souradniceY - velikost / 2, velikost, velikost);
     }
 
-    private double hodnotaVBode(double x) {
+    private double hodnotaVBode(double x) { //TODO tady
 
 
         return Math.sin(x);

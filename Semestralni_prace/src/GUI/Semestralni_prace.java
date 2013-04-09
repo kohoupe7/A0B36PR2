@@ -443,7 +443,7 @@ public class Semestralni_prace extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+                .addContainerGap(32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtVyraz, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBackspace))
@@ -487,7 +487,7 @@ public class Semestralni_prace extends javax.swing.JFrame {
        gr.setVisible(true);
        }else {
        gr.dispose();
-       }// TODO add your handling code here:
+       }
     }//GEN-LAST:event_chbxGrafItemStateChanged
 
     /**
