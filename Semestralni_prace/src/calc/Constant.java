@@ -16,12 +16,8 @@ public class Constant extends Expr {
         this.hodnota = hodnota;
     }
 
-    public double getHodnota() {
-        return hodnota;
-    }
-
     @Override
-    double evaluate() {
+    public double evaluate(double x) {
         return hodnota;
     }
 

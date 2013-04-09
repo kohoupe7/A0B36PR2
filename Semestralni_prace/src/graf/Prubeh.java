@@ -4,6 +4,7 @@
  */
 package graf;
 
+import calc.Expr;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -19,8 +20,10 @@ public class Prubeh {
     private Graphics g;
     private ArrayList<BodGrafu> bod = new ArrayList<>();
     Color barva;
+    Expr exp;
 
-    public Prubeh(double minimum, double maximum, double krok, Graphics g, Color barva, int nulaX, int nulaY, int krokX, int krokY ) {
+    public Prubeh(Expr e ,double minimum, double maximum, double krok, Graphics g, Color barva, int nulaX, int nulaY, int krokX, int krokY ) {
+        this.exp = e;
         this.minimum = minimum;
         this.maximum = maximum;
         this.krok = krok;
@@ -31,12 +34,13 @@ public class Prubeh {
         this.g = g;
         this.barva = barva;
         vypocitejBody();
+        
     }
 
     private void vypocitejBody() {
         bod.clear();
         for (double i = minimum; i <= maximum; i = i + krok) {
-            BodGrafu k = new BodGrafu(i);
+            BodGrafu k = new BodGrafu(i,exp);
             bod.add(k);
         }
         vykresli();

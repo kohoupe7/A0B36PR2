@@ -4,6 +4,7 @@
  */
 package graf;
 
+import calc.Expr;
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -14,8 +15,10 @@ import java.awt.Graphics;
 public class BodGrafu {
 
     double x, y;
+    Expr exp;
 
-    public BodGrafu(double x) {
+    public BodGrafu(double x, Expr exp) {
+        this.exp = exp;
         this.x = x;
         y = -1 * hodnotaVBode(x);
     }
@@ -25,15 +28,15 @@ public class BodGrafu {
         y = hodnotaVBode(x);
         //System.out.println(x);
         g.setColor(Color.GREEN);
-        int souradniceX = Tools.sourToPx(x, nulaX, krokX,hodnotaDilkuX);
-        int souradniceY = Tools.sourToPx(-1 * y, nulaY, krokY,hodnotaDilkuy);
+        int souradniceX = Tools.sourToPx(x, nulaX, krokX, hodnotaDilkuX);
+        int souradniceY = Tools.sourToPx(-1 * y, nulaY, krokY, hodnotaDilkuy);
         g.fillOval(souradniceX - velikost / 2, souradniceY - velikost / 2, velikost, velikost);
     }
 
     private double hodnotaVBode(double x) { //TODO tady
+        return exp.evaluate(x);
 
-
-        return Math.sin(x);
+//        return Math.sin(x);
     }
 
     public double getX() {

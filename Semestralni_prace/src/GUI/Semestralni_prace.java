@@ -10,7 +10,6 @@ import graf.Graf;
 public class Semestralni_prace extends javax.swing.JFrame {
 
     Graf gr;
-    String vyraz = new String();
     Vyraz v = new Vyraz();
     
     /**
@@ -150,7 +149,8 @@ public class Semestralni_prace extends javax.swing.JFrame {
             }
         });
 
-        btnNa.setLabel("^");
+        btnNa.setText("^2");
+        btnNa.setActionCommand("^");
         btnNa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNumAction(evt);
@@ -443,7 +443,7 @@ public class Semestralni_prace extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
+                .addContainerGap(36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtVyraz, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBackspace))
@@ -483,7 +483,8 @@ public class Semestralni_prace extends javax.swing.JFrame {
 
     private void chbxGrafItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chbxGrafItemStateChanged
         if(chbxGraf.isSelected()){
-       gr = new Graf();
+       gr = new Graf(v.getE());
+       
        gr.setVisible(true);
        }else {
        gr.dispose();

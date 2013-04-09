@@ -11,16 +11,16 @@ package calc;
 public class Variable extends Expr {
 
     private char jmeno;
-    private int hodnota;
+    
 
-    public Variable(char jmeno, int hodnota) {
+    public Variable(char jmeno) {
         this.jmeno = jmeno;
-        this.hodnota = hodnota;
+    
     }
 
     @Override
-    double evaluate() {
-        return hodnota;
+    public double evaluate(double x) {
+        return x;
     }
 
 

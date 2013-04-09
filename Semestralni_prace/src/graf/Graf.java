@@ -1,5 +1,6 @@
 package graf;
 
+import calc.Expr;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
@@ -19,11 +20,12 @@ public class Graf extends javax.swing.JFrame {
     private Color barvaPismen, barvaGrafu;
     private static double hodnotaDilkuX, hodnotaDilkuY;
     private double jemnost;
-
+    private Expr exp;
     /**
      * Creates new form Graf
      */
-    public Graf() {
+    public Graf(Expr exp) {
+        this.exp=exp;
         initComponents();
         //Nastavení počátečních parametrů
         a = 0;//okraje stránky
@@ -45,7 +47,6 @@ public class Graf extends javax.swing.JFrame {
         nulaY = vykreslovaciPlocha.getHeight() / 2;
         krokX = (vykreslovaciPlocha.getWidth() - 2 * a) / pocetDilkuX;
         krokY = stejneOsy ? krokX : (vykreslovaciPlocha.getHeight() - 2 * a) / pocetDilkuY;
-
 
     }
 
@@ -441,7 +442,7 @@ public class Graf extends javax.swing.JFrame {
         g.setColor(Color.BLACK);
         vykresliOsy(g);
 
-        Prubeh j = new Prubeh(Tools.pxToSour(a, nulaX, krokX, 'x', hodnotaDilkuX), Tools.pxToSour(vykreslovaciPlocha.getWidth() - a, nulaX, krokX, 'x', hodnotaDilkuX), jemnost, g, barvaGrafu, nulaX, nulaY, krokX, krokY);
+        Prubeh j = new Prubeh(exp,Tools.pxToSour(a, nulaX, krokX, 'x', hodnotaDilkuX), Tools.pxToSour(vykreslovaciPlocha.getWidth() - a, nulaX, krokX, 'x', hodnotaDilkuX), jemnost, g, barvaGrafu, nulaX, nulaY, krokX, krokY);
 
     }
 
@@ -504,37 +505,8 @@ public class Graf extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Graf.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Graf.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Graf.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Graf.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Graf().setVisible(true);
-            }
-        });
-    }
+   
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox chbxPosun;
     private javax.swing.JCheckBox chbxZobrazitBod;

@@ -2,6 +2,6 @@ package calc;
  
 public abstract class Expr {
  
-    abstract double evaluate();
+    public abstract double evaluate(double x);
  
 }
