@@ -443,7 +443,7 @@ public class Semestralni_prace extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
+                .addContainerGap(40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtVyraz, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBackspace))
@@ -467,6 +467,7 @@ public class Semestralni_prace extends javax.swing.JFrame {
             //Otevřít okno polynomů
         } else {
             txtVyraz.setText(v.vyres());
+            v.clear();
         }
 
     }//GEN-LAST:event_btnRovnoAction

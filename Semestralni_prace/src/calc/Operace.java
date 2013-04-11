@@ -5,6 +5,7 @@
 package calc;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -12,6 +13,7 @@ import java.util.ArrayList;
  */
 public class Operace extends Expr {
 
+    private static Exception NeparoveZavorkyExep;
     private char typ; //+ , - , * , / , =
     private Expr vyraz1;
     private Expr vyraz2;
@@ -20,11 +22,11 @@ public class Operace extends Expr {
         this.typ = typ;
         this.vyraz1 = vyraz1;
         this.vyraz2 = vyraz2;
-       
+
     }
 
     @Override
-   public double evaluate(double x) {
+    public double evaluate(double x) {
         double hodn1 = vyraz1.evaluate(x);
         double hodn2 = vyraz2.evaluate(x);
         double vysledek = 0;
@@ -42,7 +44,7 @@ public class Operace extends Expr {
                 vysledek = hodn1 / hodn2;
                 break;
             case '!'://faktoriál 
-                vysledek = faktorial((int)hodn1);
+                vysledek = faktorial((int) hodn1);
                 break;
             case '^'://na
                 vysledek = Math.pow(hodn1, 2);
@@ -68,7 +70,7 @@ public class Operace extends Expr {
             case 'e'://e
                 vysledek = Math.E;
                 break;
-               
+
         }
 
         return vysledek;
@@ -80,111 +82,71 @@ public class Operace extends Expr {
         return "(" + vyraz1.toString() + " " + String.valueOf(typ) + " " + vyraz2.toString() + ")";
     }
 
-    private int faktorial(int x){ 
-    return x==0?0:x*faktorial(x-1);
+    private int faktorial(int x) {
+        return x == 0 ? 0 : x * faktorial(x - 1);
     }
-    
-    public static Expr zArrayListu(ArrayList levy, ArrayList pravy) {
-        return null;
+
+    public static Expr zArrayListu(ArrayList levy, ArrayList pravy) throws NeparoveZavorkyExep {  
+        //Kontrola párovosti závorek
+        int pocetLevych = 0;
+        int pocetPravych = 0;
+        for (int i = 0; i < levy.size(); i++) {
+            if ("(".equals((String)levy.get(i))) {
+                pocetLevych++;
+            }
+            if (")".equals((String)levy.get(i))) {
+                pocetPravych++;
+            }
+        }
+        if (pocetLevych != pocetPravych) {
+            throw new NeparoveZavorkyExep();
+        }
+        //Kontrola párovosti závorek - end
+        levy.add(0, "(");
+        levy.add(")");
+        //přidalo na zacatek a konec zavorky
+        int indexLevy;
+        int indexPravy;
+        while (((indexLevy = levy.lastIndexOf("(")) != -1)&&levy.size()>=3) {
+
+            List sub = levy.subList(indexLevy, levy.size());
+            indexPravy = sub.indexOf(")");
+            indexLevy = 0;
+
+
+
+            List zavorka = sub.subList(indexLevy + 1, indexPravy);
+
+            // vyresi krat a deleno
+            int indexNasobitka;
+            while (((indexNasobitka = zavorka.indexOf("*")) != -1) || ((indexNasobitka = zavorka.indexOf("/")) != -1)) {
+                Expr nahrad = new Operace(((String) zavorka.get(indexNasobitka)).charAt(0), zavorka.get(indexNasobitka - 1).getClass() == Operace.class ? (Operace) zavorka.get(indexNasobitka - 1) : new Constant(Double.valueOf((String) zavorka.get(indexNasobitka - 1))), zavorka.get(indexNasobitka + 1).getClass() == Operace.class ? (Operace) zavorka.get(indexNasobitka + 1) : new Constant(Double.valueOf((String) zavorka.get(indexNasobitka + 1))));
+
+                zavorka.remove(indexNasobitka - 1);
+                zavorka.remove(indexNasobitka - 1);
+                zavorka.remove(indexNasobitka - 1);
+                zavorka.add(indexNasobitka - 1, nahrad);
+
+
+            }
+            //vyresi plus a minus
+            int indexPlusitka;
+            while (((indexPlusitka = zavorka.indexOf("+")) != -1) || ((indexPlusitka = zavorka.indexOf("-")) != -1)) {
+                Expr nahrad = new Operace(((String) zavorka.get(indexPlusitka)).charAt(0), zavorka.get(indexPlusitka - 1).getClass() == Operace.class ? (Operace) zavorka.get(indexPlusitka - 1) : new Constant(Double.valueOf((String) zavorka.get(indexPlusitka - 1))), zavorka.get(indexPlusitka + 1).getClass() == Operace.class ? (Operace) zavorka.get(indexPlusitka + 1) : new Constant(Double.valueOf((String) zavorka.get(indexPlusitka + 1))));
+
+                zavorka.remove(indexPlusitka - 1);
+                zavorka.remove(indexPlusitka - 1);
+                zavorka.remove(indexPlusitka - 1);
+                zavorka.add(indexPlusitka - 1, nahrad);
+
+            }
+            sub.remove(indexLevy);
+            sub.remove(indexLevy + 1);
+        }
+
+
+
+
+        return (Expr)levy.get(0);
     }
-//    public static Expr fromArrayList(ArrayList List) throws ArrayIndexOutOfBoundsException {
-//        if (List.size()==1 && List.get(0).getClass()==Operace.class){
-//            return (Expr) List.get(0);
-//        }
-//
-//        int pocetzavorek = 0;
-//        int indexKZ = 0; // Index konečné závorky
-//        int indexZZ = Integer.MAX_VALUE; // Index začátku závorky
-//
-//        //Spočítá počet závorek, uzavřených dvojic.
-//        for (int i = 0; List.size() > i; i++) {
-//            if (List.get(i).toString().charAt(0) == '(') {
-//                pocetzavorek++;
-//            }
-//        }
-//
-//        // Jestliže je první znak řetězce znak '-', bude první čílso záporné.
-//        if ((List.get(0).toString().charAt(0) == '-') && List.get(0).toString().length() == 1) {
-//            List.add(1, new Constant(Double.valueOf(List.get(1).toString()) * -1));
-//            List.remove(0);
-//            List.remove(1); // odepbere se index 0, to co bylo index 1 je 0, 2 je 1
-//        }
-//        if ((List.get(0).toString().charAt(0) == '+') && List.get(0).toString().length() == 1) {           
-//            List.remove(0);          
-//        }      
-//        // Převede čísla v řetězci na konstanty.
-//        for (int i = 0; i < List.size(); i++) {
-//            if (Character.isDigit(List.get(i).toString().charAt(0)) && List.get(i).getClass().equals(Constant.class) == false) {
-//                List.set(i, new Constant(Double.valueOf(List.get(i).toString())));
-//            }
-//        }
-//
-//        while (pocetzavorek != 0) {
-//            //Najde index nejvnitřejší konečné závorky.
-//            for (int i = 0; indexKZ == 0; i++) {
-//                if (List.get(i).toString().charAt(0) == ')') {
-//                    indexKZ = i;
-//                }
-//            }
-//            //Najde index nejvnitřejší začínající závorky.
-//            for (int i = indexKZ; indexZZ == Integer.MAX_VALUE; i--) {
-//                if (List.get(i).toString().charAt(0) == '(') {
-//                    indexZZ = i;
-//                }
-//            }
-//            //Vytvoří nový ArrayList obsahujicí řetězec nejvnitřejší závorky.
-//            ArrayList ListP = new ArrayList();
-//            for (int j = indexZZ + 1; j != indexKZ; j++) {
-//                ListP.add(List.get(j));
-//            }
-//            for (int j = indexKZ; j != indexZZ - 1; j--) {
-//                List.remove(j);
-//            }
-//            //Zavolá znovu metodu výpočet, jako vstup bude ArrayList vnitřní závorky.
-//            //List.add(indexZZ, Operace.fromArrayList(ListP));
-//            List.add(indexZZ, Operace.fromArrayList(ListP));
-//            ListP.clear();
-//            pocetzavorek--;
-//            indexKZ = 0;
-//            indexZZ = Integer.MAX_VALUE;
-//        }
-//        // Jestliže je za nebo před závorkou číslo bude bude mezi číslo a závorku vložen znak násobení.
-//        for (int i = 0; i < List.size() - 1; i++) {
-//            if (Character.isDigit(List.get(i).toString().charAt(0)) && Character.isDigit(List.get(i + 1).toString().charAt(0))) {
-//                List.add(i + 1, '*');
-//            }
-//        }
-//        /**
-//         * Vlastní výpočet, vložený řetězec skládá na class Operace podle
-//         * matematických zákonů. Nejprve se provede násobení a dělení a poté
-//         * teprve sčítání a odčítání.
-//         */
-//        for (int i = 0; i < List.size(); i++) {
-//            if (List.get(i).getClass() == "".getClass() && (List.get(i).toString().charAt(0) == '^')) {
-//                List.set(i, new Operace(String.valueOf(List.get(i)).toCharArray()[0], (Expr) List.get(i - 1), (Expr) List.get(i + 1)));
-//                List.remove(i + 1);
-//                List.remove(i - 1);
-//                i--;
-//            }
-//        }
-//
-//        for (int i = 0; i < List.size(); i++) {
-//            if (List.get(i).getClass() == "".getClass() && (List.get(i).toString().charAt(0) == '*' || List.get(i).toString().charAt(0) == '/')) {
-//                List.set(i, new Operace(String.valueOf(List.get(i)).toCharArray()[0], (Expr) List.get(i - 1), (Expr) List.get(i + 1)));
-//                List.remove(i + 1);
-//                List.remove(i - 1);
-//                i--;
-//            }
-//        }
-//
-//        for (int i = 0; i < List.size(); i++) {
-//            if (List.get(i).getClass() == "".getClass()) {
-//                List.set(i, new Operace(String.valueOf(List.get(i)).toCharArray()[0], (Expr) List.get(i - 1), (Expr) List.get(i + 1)));
-//                List.remove(i + 1);
-//                List.remove(i - 1);
-//                i--;
-//            }
-//        }
-//        return new Bracers('(', (Expr) List.get(0), ')');
-//    }
 }

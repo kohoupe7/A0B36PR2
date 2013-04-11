@@ -1,6 +1,8 @@
 package calc;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,9 +21,18 @@ public class Vyraz {
     }
     
     public String vyres() {
+        try {      
+            e=Operace.zArrayListu(listLevy, listPravy);
+        } catch (NeparoveZavorkyExep ex) {
+            Logger.getLogger(Vyraz.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return String.valueOf(e.evaluate(0));
     }
     
+    public void clear(){
+    vyraz="";
+    }
     public void pridej(String co) {
         
         vyraz += co;
@@ -33,7 +44,7 @@ public class Vyraz {
         } else if(vyraz.indexOf('=') != -1 && vyraz.indexOf('=') != vyraz.length()){
             listPravy = Tools.naplnArrayList(vyraz.substring(vyraz.indexOf('=')));
         }
-        e=Operace.zArrayListu(listLevy, listPravy);
+        //e=Operace.zArrayListu(listLevy, listPravy);
     }
     
     private boolean poradPolynom() {
@@ -55,7 +66,7 @@ public class Vyraz {
         } else if(vyraz.indexOf('=') != -1 && vyraz.indexOf('=') != vyraz.length()) {
             listPravy = Tools.naplnArrayList(vyraz.substring(vyraz.indexOf('=')));
         }
-         e=Operace.zArrayListu(listLevy, listPravy);
+         //e=Operace.zArrayListu(listLevy, listPravy);
     }
     
   
