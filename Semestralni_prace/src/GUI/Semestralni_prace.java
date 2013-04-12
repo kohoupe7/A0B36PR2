@@ -149,7 +149,7 @@ public class Semestralni_prace extends javax.swing.JFrame {
             }
         });
 
-        btnNa.setText("^2");
+        btnNa.setText("^");
         btnNa.setActionCommand("^");
         btnNa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -417,6 +417,11 @@ public class Semestralni_prace extends javax.swing.JFrame {
         jMenu1.setText("File");
 
         menuExit.setText("Exit");
+        menuExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExitActionPerformed(evt);
+            }
+        });
         jMenu1.add(menuExit);
 
         jMenuBar1.add(jMenu1);
@@ -443,7 +448,7 @@ public class Semestralni_prace extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
+                .addContainerGap(52, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtVyraz, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBackspace))
@@ -491,6 +496,10 @@ public class Semestralni_prace extends javax.swing.JFrame {
        gr.dispose();
        }
     }//GEN-LAST:event_chbxGrafItemStateChanged
+
+    private void menuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExitActionPerformed
+System.exit(0);
+    }//GEN-LAST:event_menuExitActionPerformed
 
     /**
      * @param args the command line arguments

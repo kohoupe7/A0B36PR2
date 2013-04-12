@@ -47,10 +47,10 @@ public class Operace extends Expr {
                 vysledek = faktorial((int) hodn1);
                 break;
             case '^'://na
-                vysledek = Math.pow(hodn1, 2);
+                vysledek = Math.pow(hodn1, hodn2);
                 break;
-            case '0'://odmocnina
-                vysledek = Math.sqrt(hodn1);
+            case 'o'://odmocnina
+                vysledek = Math.pow(hodn2, 1/hodn1);
                 break;
             case 's'://sinus
                 vysledek = Math.sin(hodn1);
@@ -83,18 +83,18 @@ public class Operace extends Expr {
     }
 
     private int faktorial(int x) {
-        return x == 0 ? 0 : x * faktorial(x - 1);
+        return x == 0 ? 1 : x * faktorial(x - 1);
     }
 
-    public static Expr zArrayListu(ArrayList levy, ArrayList pravy) throws NeparoveZavorkyExep {  
+    public static Expr zArrayListu(ArrayList levy, ArrayList pravy) throws NeparoveZavorkyExep {
         //Kontrola párovosti závorek
         int pocetLevych = 0;
         int pocetPravych = 0;
         for (int i = 0; i < levy.size(); i++) {
-            if ("(".equals((String)levy.get(i))) {
+            if ("(".equals((String) levy.get(i))) {
                 pocetLevych++;
             }
-            if (")".equals((String)levy.get(i))) {
+            if (")".equals((String) levy.get(i))) {
                 pocetPravych++;
             }
         }
@@ -107,15 +107,64 @@ public class Operace extends Expr {
         //přidalo na zacatek a konec zavorky
         int indexLevy;
         int indexPravy;
-        while (((indexLevy = levy.lastIndexOf("(")) != -1)&&levy.size()>=3) {
+        while (((indexLevy = levy.lastIndexOf("(")) != -1) && levy.size() >= 3) {
 
             List sub = levy.subList(indexLevy, levy.size());
             indexPravy = sub.indexOf(")");
             indexLevy = 0;
 
-
-
             List zavorka = sub.subList(indexLevy + 1, indexPravy);
+            
+            //vyřeší konstanty Pí a E
+            int indexPiE;
+            while (((indexPiE = zavorka.indexOf("p")) != -1) || ((indexPiE = zavorka.indexOf("e")) != -1)) {
+                Expr nahrad = new Operace(((String) zavorka.get(indexPiE)).charAt(0), new Null(), new Null());
+                
+                zavorka.remove(indexPiE);
+                zavorka.add(indexPiE, nahrad);
+            }
+            //vyřeší proměnné X a Y, kvůli lepšímu zpracování převede na součet proměnné plus 0
+             int indexPromene;
+            while (((indexPromene = zavorka.indexOf("X")) != -1) || ((indexPromene = zavorka.indexOf("Y")) != -1)) {
+                Expr nahrad = new Operace('+',new Variable(((String) zavorka.get(indexPromene)).charAt(0)) , new Null());
+                
+                zavorka.remove(indexPromene);
+                zavorka.add(indexPromene, nahrad);
+            }
+            
+               //vyřeší faktoriál
+           int indexFakt;
+            while (((indexFakt = zavorka.indexOf("!")) != -1)) {
+                Expr nahrad = new Operace(((String) zavorka.get(indexFakt)).charAt(0), zavorka.get(indexFakt - 1).getClass() == Operace.class ? (Operace) zavorka.get(indexFakt - 1) : new Constant(Double.valueOf((String) zavorka.get(indexFakt - 1))), new Null());
+
+                zavorka.remove(indexFakt - 1);
+                zavorka.remove(indexFakt - 1);
+                zavorka.add(indexFakt - 1, nahrad);
+
+            }
+            
+            //vyřeší mocnění
+           int indexMocnitka;
+            while (((indexMocnitka = zavorka.indexOf("^")) != -1) || ((indexMocnitka = zavorka.indexOf("o")) != -1)) {
+                Expr nahrad = new Operace(((String) zavorka.get(indexMocnitka)).charAt(0), zavorka.get(indexMocnitka - 1).getClass() == Operace.class ? (Operace) zavorka.get(indexMocnitka - 1) : new Constant(Double.valueOf((String) zavorka.get(indexMocnitka - 1))), zavorka.get(indexMocnitka + 1).getClass() == Operace.class ? (Operace) zavorka.get(indexMocnitka + 1) : new Constant(Double.valueOf((String) zavorka.get(indexMocnitka + 1))));
+
+                zavorka.remove(indexMocnitka - 1);
+                zavorka.remove(indexMocnitka - 1);
+                zavorka.remove(indexMocnitka - 1);
+                zavorka.add(indexMocnitka - 1, nahrad);
+
+            }
+                //vyřeší sinus, kosinus a logaritmy
+           int indexFce;
+            while (((indexFce = zavorka.indexOf("s")) != -1) || ((indexFce = zavorka.indexOf("c")) != -1) || ((indexFce = zavorka.indexOf("l")) != -1) || ((indexFce = zavorka.indexOf("d")) != -1)) {
+                Expr nahrad = new Operace(((String) zavorka.get(indexFce)).charAt(0), zavorka.get(indexFce + 1).getClass() == Operace.class ? (Operace) zavorka.get(indexFce + 1) : new Constant(Double.valueOf((String) zavorka.get(indexFce + 1))), new Null());
+
+                zavorka.remove(indexFce);
+                zavorka.remove(indexFce);
+                zavorka.add(indexFce, nahrad);
+
+            }
+            
 
             // vyresi krat a deleno
             int indexNasobitka;
@@ -141,12 +190,9 @@ public class Operace extends Expr {
 
             }
             sub.remove(indexLevy);
-            sub.remove(indexLevy + 1);
+            sub.remove(indexLevy + 1);//počítá s tím, že v arraylistu zbude pouze (operace)
         }
 
-
-
-
-        return (Expr)levy.get(0);
+        return (Expr) levy.get(0);
     }
 }

@@ -17,7 +17,15 @@ public class Tools {
         boolean isDigit = false;
         ArrayList ret = new ArrayList();
         String cast = null;
-
+        //ošetření vícepísmených názvů funkcí
+        input = input.replaceAll("pi", "p");
+        input = input.replaceAll("sin", "s");
+        input = input.replaceAll("cos", "c");
+        input = input.replaceAll("sqrt", "o");
+        input = input.replaceAll("ln", "l");
+        input = input.replaceAll("log", "d");
+        //ošetření vícepísmených názvů funkcí - end
+        
         for (int i = 0; i < input.length(); i++) {
             cast = isDigit ? cast + input.charAt(i) : Character.toString(input.charAt(i));
 
