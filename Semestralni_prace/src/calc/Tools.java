@@ -12,11 +12,7 @@ import java.util.ArrayList;
  */
 public class Tools {
 
-    public static ArrayList naplnArrayList(String input) {
-
-        boolean isDigit = false;
-        ArrayList ret = new ArrayList();
-        String cast = null;
+    public static String nahradNepohodlne(String input) {
         //ošetření vícepísmených názvů funkcí
         input = input.replaceAll("pi", "p");
         input = input.replaceAll("sin", "s");
@@ -25,7 +21,16 @@ public class Tools {
         input = input.replaceAll("ln", "l");
         input = input.replaceAll("log", "d");
         //ošetření vícepísmených názvů funkcí - end
-        
+        return input;
+    }
+
+    public static ArrayList naplnArrayList(String input) {
+
+        boolean isDigit = false;
+        ArrayList ret = new ArrayList();
+        String cast = null;
+        input = nahradNepohodlne(input);
+
         for (int i = 0; i < input.length(); i++) {
             cast = isDigit ? cast + input.charAt(i) : Character.toString(input.charAt(i));
 

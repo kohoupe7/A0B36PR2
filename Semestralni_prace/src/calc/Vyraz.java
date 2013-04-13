@@ -1,8 +1,6 @@
 package calc;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -19,14 +17,11 @@ public class Vyraz {
     public Vyraz() {
         polynom = false;
     }
-    
-    public String vyres() {
-        try {      
-            e=Operace.zArrayListu(listLevy, listPravy);
-        } catch (NeparoveZavorkyExep ex) {
-            Logger.getLogger(Vyraz.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+    public void napln(){
+     e=Operace.zArrayListu(listLevy, listPravy); 
+    }
+    public String vyres() {            
+            napln();
         return String.valueOf(e.evaluate(0));
     }
     
@@ -44,7 +39,7 @@ public class Vyraz {
         } else if(vyraz.indexOf('=') != -1 && vyraz.indexOf('=') != vyraz.length()){
             listPravy = Tools.naplnArrayList(vyraz.substring(vyraz.indexOf('=')));
         }
-        //e=Operace.zArrayListu(listLevy, listPravy);
+       // napln();
     }
     
     private boolean poradPolynom() {
@@ -58,6 +53,7 @@ public class Vyraz {
     public void odeber() {
         if (vyraz.length() != 0) {
             vyraz = vyraz.substring(0, vyraz.length() - 1);
+            
             polynom = poradPolynom();
         }
          if (vyraz.indexOf('=') == -1) {
@@ -66,9 +62,11 @@ public class Vyraz {
         } else if(vyraz.indexOf('=') != -1 && vyraz.indexOf('=') != vyraz.length()) {
             listPravy = Tools.naplnArrayList(vyraz.substring(vyraz.indexOf('=')));
         }
-         //e=Operace.zArrayListu(listLevy, listPravy);
+       //  napln();
     }
-    
+    public boolean hasRovno(){
+       return vyraz.indexOf('=') == -1?false:true;
+    }
   
     public String getVyraz() {
         return vyraz;
@@ -78,7 +76,7 @@ public class Vyraz {
         return polynom;
     }
 
-    public Expr getE() { //TODO vrátí vyjádřený Y
+    public Expr getExpY() { //TODO vrátí vyjádřený Y
         
         return e;
     }

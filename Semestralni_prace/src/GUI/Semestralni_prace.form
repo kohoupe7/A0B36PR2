@@ -141,8 +141,8 @@
                           <Component id="btnPi" min="-2" pref="39" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnE" min="-2" pref="39" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="chbxGraf" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btnGraf" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -208,31 +208,27 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="btn2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btn3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnMinus" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnZavL" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnZavP" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnSqrt" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="btn1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="btn0" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnPlus" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnTecka" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnRovno" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnPi" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnE" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btn2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btn3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnMinus" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnZavL" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnZavP" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnSqrt" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="chbxGraf" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn1" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btn0" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnPlus" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnTecka" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnRovno" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnPi" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnE" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnGraf" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -472,14 +468,17 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNumAction"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="chbxGraf">
+        <Component class="javax.swing.JButton" name="btnGraf">
           <Properties>
-            <Property name="text" type="java.lang.String" value="graf"/>
-            <Property name="name" type="java.lang.String" value="chbxGraf" noResource="true"/>
+            <Property name="text" type="java.lang.String" value="Zobrazit graf"/>
           </Properties>
           <Events>
-            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="chbxGrafItemStateChanged"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGrafActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnGraf.setVisible(false);"/>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="Semestralni_prace_btnGraf"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

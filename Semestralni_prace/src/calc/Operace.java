@@ -12,9 +12,8 @@ import java.util.List;
  * @author petr
  */
 public class Operace extends Expr {
-
-    private static Exception NeparoveZavorkyExep;
-    private char typ; //+ , - , * , / , =
+    
+    private char typ; 
     private Expr vyraz1;
     private Expr vyraz2;
 
@@ -76,25 +75,27 @@ public class Operace extends Expr {
         return vysledek;
     }
 
-    @Override
-    public String toString() {
-
-        return "(" + vyraz1.toString() + " " + String.valueOf(typ) + " " + vyraz2.toString() + ")";
-    }
-
     private int faktorial(int x) {
         return x == 0 ? 1 : x * faktorial(x - 1);
     }
 
-    public static Expr zArrayListu(ArrayList levy, ArrayList pravy) throws NeparoveZavorkyExep {
+     public static Expr zArrayListu(ArrayList levy, ArrayList pravy) throws NeparoveZavorkyExep {
+        if(pravy.isEmpty()){
+            return arrayListToOp(levy);
+        }else{ 
+         return new Operace('=',arrayListToOp(levy) , arrayListToOp(pravy));
+        }
+       }
+    
+    public static Expr arrayListToOp(ArrayList list) throws NeparoveZavorkyExep {
         //Kontrola párovosti závorek
         int pocetLevych = 0;
         int pocetPravych = 0;
-        for (int i = 0; i < levy.size(); i++) {
-            if ("(".equals((String) levy.get(i))) {
+        for (int i = 0; i < list.size(); i++) {
+            if ("(".equals((String) list.get(i))) {
                 pocetLevych++;
             }
-            if (")".equals((String) levy.get(i))) {
+            if (")".equals((String) list.get(i))) {
                 pocetPravych++;
             }
         }
@@ -102,14 +103,14 @@ public class Operace extends Expr {
             throw new NeparoveZavorkyExep();
         }
         //Kontrola párovosti závorek - end
-        levy.add(0, "(");
-        levy.add(")");
+        list.add(0, "(");
+        list.add(")");
         //přidalo na zacatek a konec zavorky
         int indexLevy;
         int indexPravy;
-        while (((indexLevy = levy.lastIndexOf("(")) != -1) && levy.size() >= 3) {
+        while (((indexLevy = list.lastIndexOf("(")) != -1) && list.size() >= 3) {
 
-            List sub = levy.subList(indexLevy, levy.size());
+            List sub = list.subList(indexLevy, list.size());
             indexPravy = sub.indexOf(")");
             indexLevy = 0;
 
@@ -189,10 +190,21 @@ public class Operace extends Expr {
                 zavorka.add(indexPlusitka - 1, nahrad);
 
             }
+            if(sub.size()==3 && sub.get(1).getClass()!=Operace.class){
+                if(Character.isDigit(((String)sub.get(1)).charAt(0))){
+            sub.add(1,new Constant(Double.valueOf((String)sub.get(1))));
+            sub.remove(2);}
+            }
+                
             sub.remove(indexLevy);
             sub.remove(indexLevy + 1);//počítá s tím, že v arraylistu zbude pouze (operace)
         }
 
-        return (Expr) levy.get(0);
+        return (Expr) list.get(0);
+    }
+
+    @Override
+    public boolean hasVar(char name) {
+       return vyraz1.hasVar(name)||vyraz2.hasVar(name);
     }
 }

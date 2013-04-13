@@ -8,7 +8,7 @@ package calc;
  *
  * @author petr
  */
-public class NeparoveZavorkyExep extends Exception{
+public class NeparoveZavorkyExep extends RuntimeException{
 
     public NeparoveZavorkyExep() {
     }

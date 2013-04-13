@@ -25,4 +25,9 @@ public class Constant extends Expr {
     public String toString() {
         return String.format("%.3f", hodnota); // desetiná čárka/tečka ?
     }
+
+    @Override
+    public boolean hasVar(char name) {
+        return false;
+    }
 }

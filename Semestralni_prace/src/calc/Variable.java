@@ -29,4 +29,9 @@ public class Variable extends Expr {
     public String toString() {
         return String.valueOf(jmeno);
     }
+
+    @Override
+    public boolean hasVar(char name) {
+       return jmeno==name?true:false;
+    }
 }

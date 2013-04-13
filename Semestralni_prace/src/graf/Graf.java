@@ -89,7 +89,7 @@ public class Graf extends javax.swing.JFrame {
         menuClrGr = new javax.swing.JMenuItem();
         menuClrPop = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAutoRequestFocus(false);
         setBackground(new java.awt.Color(255, 255, 255));
         setLocationByPlatform(true);
@@ -295,7 +295,7 @@ public class Graf extends javax.swing.JFrame {
                 .addComponent(chbxZoomX)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chbxZoomY)
-                .addContainerGap(170, Short.MAX_VALUE))
+                .addContainerGap(155, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Úpravy");
