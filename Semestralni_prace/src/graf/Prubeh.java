@@ -22,7 +22,7 @@ public class Prubeh {
     Color barva;
     Expr exp;
 
-    public Prubeh(Expr e ,double minimum, double maximum, double krok, Graphics g, Color barva, int nulaX, int nulaY, int krokX, int krokY ) {
+    public Prubeh(Expr e, double minimum, double maximum, double krok, Graphics g, Color barva, int nulaX, int nulaY, int krokX, int krokY) {
         this.exp = e;
         this.minimum = minimum;
         this.maximum = maximum;
@@ -34,13 +34,13 @@ public class Prubeh {
         this.g = g;
         this.barva = barva;
         vypocitejBody();
-        
+
     }
 
     private void vypocitejBody() {
         bod.clear();
         for (double i = minimum; i <= maximum; i = i + krok) {
-            BodGrafu k = new BodGrafu(i,exp);
+            BodGrafu k = new BodGrafu(i, exp);
             bod.add(k);
         }
         vykresli();
@@ -62,12 +62,12 @@ public class Prubeh {
     }
 
     private void vykresli() {
-        int souradniceX1, souradniceX2, souradniceY1, souradniceY2;  
-        souradniceX1 = Tools.sourToPx(bod.get(0).getX(), nulaX, krokX,Graf.getHodnotaDilku('x'));
-        souradniceY1 = Tools.sourToPx(bod.get(0).getY(), nulaY, krokY,Graf.getHodnotaDilku('y'));  
+        int souradniceX1, souradniceX2, souradniceY1, souradniceY2;
+        souradniceX1 = Tools.sourToPx(bod.get(0).getX(), nulaX, krokX, Graf.getHodnotaDilku('x'));
+        souradniceY1 = Tools.sourToPx(bod.get(0).getY(), nulaY, krokY, Graf.getHodnotaDilku('y'));
         for (int i = 1; i < bod.size(); i++) {
-            souradniceX2 = Tools.sourToPx(bod.get(i).getX(), nulaX, krokX,Graf.getHodnotaDilku('x'));
-            souradniceY2 = Tools.sourToPx(bod.get(i).getY(), nulaY, krokY,Graf.getHodnotaDilku('y'));
+            souradniceX2 = Tools.sourToPx(bod.get(i).getX(), nulaX, krokX, Graf.getHodnotaDilku('x'));
+            souradniceY2 = Tools.sourToPx(bod.get(i).getY(), nulaY, krokY, Graf.getHodnotaDilku('y'));
             g.setColor(barva);
             g.drawLine(souradniceX1, souradniceY1, souradniceX2, souradniceY2);
             souradniceX1 = souradniceX2;
@@ -75,5 +75,4 @@ public class Prubeh {
 
         }
     }
-    
 }

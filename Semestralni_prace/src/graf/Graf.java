@@ -21,11 +21,12 @@ public class Graf extends javax.swing.JFrame {
     private static double hodnotaDilkuX, hodnotaDilkuY;
     private double jemnost;
     private Expr exp;
+
     /**
      * Creates new form Graf
      */
     public Graf(Expr exp) {
-        this.exp=exp;
+        this.exp = exp;
         initComponents();
         //Nastavení počátečních parametrů
         a = 0;//okraje stránky
@@ -442,7 +443,7 @@ public class Graf extends javax.swing.JFrame {
         g.setColor(Color.BLACK);
         vykresliOsy(g);
 
-        Prubeh j = new Prubeh(exp,Tools.pxToSour(a, nulaX, krokX, 'x', hodnotaDilkuX), Tools.pxToSour(vykreslovaciPlocha.getWidth() - a, nulaX, krokX, 'x', hodnotaDilkuX), jemnost, g, barvaGrafu, nulaX, nulaY, krokX, krokY);
+        Prubeh j = new Prubeh(exp, Tools.pxToSour(a, nulaX, krokX, 'x', hodnotaDilkuX), Tools.pxToSour(vykreslovaciPlocha.getWidth() - a, nulaX, krokX, 'x', hodnotaDilkuX), jemnost, g, barvaGrafu, nulaX, nulaY, krokX, krokY);
 
     }
 
@@ -501,12 +502,9 @@ public class Graf extends javax.swing.JFrame {
     public static double getHodnotaDilku(char ktery) {
         return ktery == 'x' ? hodnotaDilkuX : hodnotaDilkuY;
     }
-
     /**
      * @param args the command line arguments
      */
-   
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox chbxPosun;
     private javax.swing.JCheckBox chbxZobrazitBod;

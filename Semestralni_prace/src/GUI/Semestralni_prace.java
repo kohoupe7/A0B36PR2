@@ -1,7 +1,10 @@
 package GUI;
 
+import exeptions.ChybiOperandExep;
+import exeptions.ZavorkyExep;
 import calc.Vyraz;
 import graf.Graf;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,7 +37,6 @@ public class Semestralni_prace extends javax.swing.JFrame {
         btn7 = new javax.swing.JButton();
         btn0 = new javax.swing.JButton();
         btnRovno = new javax.swing.JButton();
-        btnY = new javax.swing.JButton();
         btnX = new javax.swing.JButton();
         btnLog = new javax.swing.JButton();
         btnSin = new javax.swing.JButton();
@@ -94,13 +96,6 @@ public class Semestralni_prace extends javax.swing.JFrame {
             }
         });
 
-        btnY.setLabel("Y");
-        btnY.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPromenaAction(evt);
-            }
-        });
-
         btnX.setLabel("X");
         btnX.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,6 +103,7 @@ public class Semestralni_prace extends javax.swing.JFrame {
             }
         });
 
+        btnLog.setActionCommand("log(");
         btnLog.setLabel("log");
         btnLog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,6 +111,7 @@ public class Semestralni_prace extends javax.swing.JFrame {
             }
         });
 
+        btnSin.setActionCommand("sin(");
         btnSin.setLabel("sin");
         btnSin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,6 +119,7 @@ public class Semestralni_prace extends javax.swing.JFrame {
             }
         });
 
+        btnCos.setActionCommand("cos(");
         btnCos.setLabel("cos");
         btnCos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,7 +149,6 @@ public class Semestralni_prace extends javax.swing.JFrame {
         });
 
         btnNa.setText("^");
-        btnNa.setActionCommand("^");
         btnNa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNumAction(evt);
@@ -165,6 +162,7 @@ public class Semestralni_prace extends javax.swing.JFrame {
             }
         });
 
+        btnLn.setActionCommand("ln(");
         btnLn.setLabel("ln");
         btnLn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -272,6 +270,7 @@ public class Semestralni_prace extends javax.swing.JFrame {
         });
 
         btnSqrt.setText("sqrt");
+        btnSqrt.setActionCommand("sqrt(");
         btnSqrt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNumAction(evt);
@@ -279,7 +278,6 @@ public class Semestralni_prace extends javax.swing.JFrame {
         });
 
         btnGraf.setText("Zobrazit graf");
-        btnGraf.setVisible(false);
         btnGraf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGrafActionPerformed(evt);
@@ -327,12 +325,6 @@ public class Semestralni_prace extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnPi, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnE, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnGraf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnZavL, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -352,11 +344,16 @@ public class Semestralni_prace extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnCos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnLog, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(29, 29, 29)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnY, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnX, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(49, Short.MAX_VALUE))))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnGraf)
+                        .addContainerGap(26, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnPi, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnE, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnX, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(83, 83, 83))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -369,29 +366,32 @@ public class Semestralni_prace extends javax.swing.JFrame {
                     .addComponent(btnDeleno)
                     .addComponent(btnNa)
                     .addComponent(btnSin)
-                    .addComponent(btnCos)
-                    .addComponent(btnY))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn4)
-                    .addComponent(btn5)
-                    .addComponent(btn6)
-                    .addComponent(btnKrat)
-                    .addComponent(btnLog)
-                    .addComponent(btnFakt)
-                    .addComponent(btnLn)
-                    .addComponent(btnX))
+                    .addComponent(btnCos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn2)
-                        .addComponent(btn3)
-                        .addComponent(btnMinus)
-                        .addComponent(btnZavL)
-                        .addComponent(btnZavP)
-                        .addComponent(btnSqrt))
-                    .addComponent(btn1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn4)
+                            .addComponent(btn5)
+                            .addComponent(btn6)
+                            .addComponent(btnKrat)
+                            .addComponent(btnLog)
+                            .addComponent(btnFakt)
+                            .addComponent(btnLn))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btn2)
+                                .addComponent(btn3)
+                                .addComponent(btnMinus)
+                                .addComponent(btnZavL)
+                                .addComponent(btnZavP)
+                                .addComponent(btnSqrt))
+                            .addComponent(btn1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnGraf)
+                        .addGap(24, 24, 24)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn0)
                     .addComponent(btnPlus)
@@ -399,7 +399,7 @@ public class Semestralni_prace extends javax.swing.JFrame {
                     .addComponent(btnRovno)
                     .addComponent(btnPi)
                     .addComponent(btnE)
-                    .addComponent(btnGraf))
+                    .addComponent(btnX))
                 .addGap(10, 10, 10))
         );
 
@@ -447,7 +447,7 @@ public class Semestralni_prace extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(52, Short.MAX_VALUE)
+                .addContainerGap(64, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtVyraz, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBackspace))
@@ -465,14 +465,15 @@ public class Semestralni_prace extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNumAction
 
     private void btnRovnoAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRovnoAction
-//        if (v.isPolynom()) {
-//            if(!v.hasRovno()){v.pridej(evt.getActionCommand());}
-//            txtVyraz.setText(v.getVyraz());
-            btnGraf.setVisible(true);
-//        } else {
+
+        try {
             txtVyraz.setText(v.vyres());
-            v.clear();
-//        }
+             v.clear();
+        } catch (ZavorkyExep e) {
+            JOptionPane.showMessageDialog(this, "Chyba. "+e.getMessage(), "Chyba", JOptionPane.ERROR_MESSAGE);    
+        } catch(ChybiOperandExep e){
+            JOptionPane.showMessageDialog(this, "Chyba, nezadán operand u funkce "+e.getMessage(), "Chyba", JOptionPane.ERROR_MESSAGE);
+        }
 
     }//GEN-LAST:event_btnRovnoAction
 
@@ -491,14 +492,18 @@ public class Semestralni_prace extends javax.swing.JFrame {
     }//GEN-LAST:event_menuExitActionPerformed
 
     private void btnGrafActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrafActionPerformed
-        graf = !graf;
-        if (graf) {
-            v.napln();
+        
+       
+            try{
+           v.napln();
             gr = new Graf(v.getExpY());
             gr.setVisible(true);
-        } else {
-            gr.dispose();
+            } catch (ZavorkyExep e) {
+            JOptionPane.showMessageDialog(this, "Chyba. "+e.getMessage(), "Chyba", JOptionPane.ERROR_MESSAGE);    
+        } catch(ChybiOperandExep e){
+            JOptionPane.showMessageDialog(this, "Chyba, nezadán operand u některé z funkcí", "Chyba", JOptionPane.ERROR_MESSAGE);
         }
+        
     }//GEN-LAST:event_btnGrafActionPerformed
 
     /**
@@ -532,6 +537,7 @@ public class Semestralni_prace extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Semestralni_prace().setVisible(true);
+                
             }
         });
     }
@@ -564,7 +570,6 @@ public class Semestralni_prace extends javax.swing.JFrame {
     private javax.swing.JButton btnSqrt;
     private javax.swing.JButton btnTecka;
     private javax.swing.JButton btnX;
-    private javax.swing.JButton btnY;
     private javax.swing.JButton btnZavL;
     private javax.swing.JButton btnZavP;
     private javax.swing.JMenu jMenu1;

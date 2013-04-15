@@ -74,7 +74,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="52" max="32767" attributes="0"/>
+              <EmptySpace pref="64" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="txtVyraz" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
                   <Component id="btnBackspace" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -137,13 +137,6 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="btnPi" min="-2" pref="39" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnE" min="-2" pref="39" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnGraf" max="32767" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                               <Group type="102" attributes="0">
@@ -170,12 +163,17 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="btnY" min="-2" pref="39" max="-2" attributes="0"/>
-                              <Component id="btnX" min="-2" pref="39" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace pref="49" max="32767" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btnGraf" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="26" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="btnPi" min="-2" pref="39" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnE" min="-2" pref="39" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btnX" min="-2" pref="39" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -193,32 +191,38 @@
                       <Component id="btnNa" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnSin" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnCos" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnY" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btn4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btn5" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btn6" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnKrat" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnLog" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnFakt" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnLn" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnX" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btn2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btn3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnMinus" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnZavL" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnZavP" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnSqrt" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="btn4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btn5" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btn6" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnKrat" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnLog" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnFakt" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnLn" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btn2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btn3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnMinus" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnZavL" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnZavP" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnSqrt" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="btn1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
-                      <Component id="btn1" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="btnGraf" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btn0" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnPlus" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -226,7 +230,7 @@
                       <Component id="btnRovno" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnPi" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnE" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnGraf" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnX" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               </Group>
@@ -258,14 +262,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRovnoAction"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnY">
-          <Properties>
-            <Property name="label" type="java.lang.String" value="Y"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPromenaAction"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="btnX">
           <Properties>
             <Property name="label" type="java.lang.String" value="X"/>
@@ -276,6 +272,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnLog">
           <Properties>
+            <Property name="actionCommand" type="java.lang.String" value="log("/>
             <Property name="label" type="java.lang.String" value="log"/>
           </Properties>
           <Events>
@@ -284,6 +281,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnSin">
           <Properties>
+            <Property name="actionCommand" type="java.lang.String" value="sin("/>
             <Property name="label" type="java.lang.String" value="sin"/>
           </Properties>
           <Events>
@@ -292,6 +290,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnCos">
           <Properties>
+            <Property name="actionCommand" type="java.lang.String" value="cos("/>
             <Property name="label" type="java.lang.String" value="cos"/>
           </Properties>
           <Events>
@@ -325,7 +324,6 @@
         <Component class="javax.swing.JButton" name="btnNa">
           <Properties>
             <Property name="text" type="java.lang.String" value="^"/>
-            <Property name="actionCommand" type="java.lang.String" value="^"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNumAction"/>
@@ -341,6 +339,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnLn">
           <Properties>
+            <Property name="actionCommand" type="java.lang.String" value="ln("/>
             <Property name="label" type="java.lang.String" value="ln"/>
           </Properties>
           <Events>
@@ -463,6 +462,7 @@
         <Component class="javax.swing.JButton" name="btnSqrt">
           <Properties>
             <Property name="text" type="java.lang.String" value="sqrt"/>
+            <Property name="actionCommand" type="java.lang.String" value="sqrt("/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNumAction"/>
@@ -476,7 +476,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGrafActionPerformed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnGraf.setVisible(false);"/>
             <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="Semestralni_prace_btnGraf"/>
           </AuxValues>
         </Component>

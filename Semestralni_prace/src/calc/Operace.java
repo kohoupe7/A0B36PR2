@@ -4,6 +4,8 @@
  */
 package calc;
 
+import exeptions.ChybiOperandExep;
+import exeptions.ZavorkyExep;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +14,8 @@ import java.util.List;
  * @author petr
  */
 public class Operace extends Expr {
-    
-    private char typ; 
+
+    private char typ;
     private Expr vyraz1;
     private Expr vyraz2;
 
@@ -49,7 +51,7 @@ public class Operace extends Expr {
                 vysledek = Math.pow(hodn1, hodn2);
                 break;
             case 'o'://odmocnina
-                vysledek = Math.pow(hodn2, 1/hodn1);
+                vysledek = Math.pow(hodn2, 1 / hodn1);
                 break;
             case 's'://sinus
                 vysledek = Math.sin(hodn1);
@@ -79,30 +81,44 @@ public class Operace extends Expr {
         return x == 0 ? 1 : x * faktorial(x - 1);
     }
 
-     public static Expr zArrayListu(ArrayList levy, ArrayList pravy) throws NeparoveZavorkyExep {
-        if(pravy.isEmpty()){
-            return arrayListToOp(levy);
-        }else{ 
-         return new Operace('=',arrayListToOp(levy) , arrayListToOp(pravy));
-        }
-       }
-    
-    public static Expr arrayListToOp(ArrayList list) throws NeparoveZavorkyExep {
+    public static Expr zArrayListu(ArrayList levy) throws ZavorkyExep, ChybiOperandExep {
+
+        return arrayListToOp(levy);
+
+    }
+
+    public static Expr arrayListToOp(ArrayList list) throws ZavorkyExep, ChybiOperandExep {
         //Kontrola párovosti závorek
-        int pocetLevych = 0;
-        int pocetPravych = 0;
-        for (int i = 0; i < list.size(); i++) {
+        int pocetZavorek = 0;   
+         for (int i = 0; i < list.size(); i++) {
             if ("(".equals((String) list.get(i))) {
-                pocetLevych++;
+                pocetZavorek++;
             }
             if (")".equals((String) list.get(i))) {
-                pocetPravych++;
+                pocetZavorek--;
             }
+            if(pocetZavorek<0){
+            throw new ZavorkyExep("Závorky jsou někde prohozeny");}
         }
-        if (pocetLevych != pocetPravych) {
-            throw new NeparoveZavorkyExep();
+        if (pocetZavorek != 0) {
+            throw new ZavorkyExep("Nepárové závorky");
         }
+        
+        
         //Kontrola párovosti závorek - end
+        for (int i = 0; i < list.size(); i++) {
+            String akt = (String)list.get(i);
+            if("(".equals(akt)){
+                if(")".equals((String)list.get(i+1))){
+                throw new ZavorkyExep("Nalezeny prázdné závorky");
+                }
+            }
+            
+        }
+        //kontrola zda bylz zadány všechna potřebná čísla
+       Tools.zkontrolujOperandy(list);
+        //kontrola zda bylz zadány všechna potřebná čísla - end    
+       
         list.add(0, "(");
         list.add(")");
         //přidalo na zacatek a konec zavorky
@@ -115,26 +131,26 @@ public class Operace extends Expr {
             indexLevy = 0;
 
             List zavorka = sub.subList(indexLevy + 1, indexPravy);
-            
+
             //vyřeší konstanty Pí a E
             int indexPiE;
             while (((indexPiE = zavorka.indexOf("p")) != -1) || ((indexPiE = zavorka.indexOf("e")) != -1)) {
                 Expr nahrad = new Operace(((String) zavorka.get(indexPiE)).charAt(0), new Null(), new Null());
-                
+
                 zavorka.remove(indexPiE);
                 zavorka.add(indexPiE, nahrad);
             }
             //vyřeší proměnné X a Y, kvůli lepšímu zpracování převede na součet proměnné plus 0
-             int indexPromene;
+            int indexPromene;
             while (((indexPromene = zavorka.indexOf("X")) != -1) || ((indexPromene = zavorka.indexOf("Y")) != -1)) {
-                Expr nahrad = new Operace('+',new Variable(((String) zavorka.get(indexPromene)).charAt(0)) , new Null());
-                
+                Expr nahrad = new Operace('+', new Variable(((String) zavorka.get(indexPromene)).charAt(0)), new Null());
+
                 zavorka.remove(indexPromene);
                 zavorka.add(indexPromene, nahrad);
             }
-            
-               //vyřeší faktoriál
-           int indexFakt;
+
+            //vyřeší faktoriál
+            int indexFakt;
             while (((indexFakt = zavorka.indexOf("!")) != -1)) {
                 Expr nahrad = new Operace(((String) zavorka.get(indexFakt)).charAt(0), zavorka.get(indexFakt - 1).getClass() == Operace.class ? (Operace) zavorka.get(indexFakt - 1) : new Constant(Double.valueOf((String) zavorka.get(indexFakt - 1))), new Null());
 
@@ -143,9 +159,9 @@ public class Operace extends Expr {
                 zavorka.add(indexFakt - 1, nahrad);
 
             }
-            
+
             //vyřeší mocnění
-           int indexMocnitka;
+            int indexMocnitka;
             while (((indexMocnitka = zavorka.indexOf("^")) != -1) || ((indexMocnitka = zavorka.indexOf("o")) != -1)) {
                 Expr nahrad = new Operace(((String) zavorka.get(indexMocnitka)).charAt(0), zavorka.get(indexMocnitka - 1).getClass() == Operace.class ? (Operace) zavorka.get(indexMocnitka - 1) : new Constant(Double.valueOf((String) zavorka.get(indexMocnitka - 1))), zavorka.get(indexMocnitka + 1).getClass() == Operace.class ? (Operace) zavorka.get(indexMocnitka + 1) : new Constant(Double.valueOf((String) zavorka.get(indexMocnitka + 1))));
 
@@ -155,8 +171,8 @@ public class Operace extends Expr {
                 zavorka.add(indexMocnitka - 1, nahrad);
 
             }
-                //vyřeší sinus, kosinus a logaritmy
-           int indexFce;
+            //vyřeší sinus, kosinus a logaritmy
+            int indexFce;
             while (((indexFce = zavorka.indexOf("s")) != -1) || ((indexFce = zavorka.indexOf("c")) != -1) || ((indexFce = zavorka.indexOf("l")) != -1) || ((indexFce = zavorka.indexOf("d")) != -1)) {
                 Expr nahrad = new Operace(((String) zavorka.get(indexFce)).charAt(0), zavorka.get(indexFce + 1).getClass() == Operace.class ? (Operace) zavorka.get(indexFce + 1) : new Constant(Double.valueOf((String) zavorka.get(indexFce + 1))), new Null());
 
@@ -165,7 +181,7 @@ public class Operace extends Expr {
                 zavorka.add(indexFce, nahrad);
 
             }
-            
+
 
             // vyresi krat a deleno
             int indexNasobitka;
@@ -190,12 +206,13 @@ public class Operace extends Expr {
                 zavorka.add(indexPlusitka - 1, nahrad);
 
             }
-            if(sub.size()==3 && sub.get(1).getClass()!=Operace.class){
-                if(Character.isDigit(((String)sub.get(1)).charAt(0))){
-            sub.add(1,new Constant(Double.valueOf((String)sub.get(1))));
-            sub.remove(2);}
+            if (sub.size() == 3 && sub.get(1).getClass() != Operace.class) {
+                if (Character.isDigit(((String) sub.get(1)).charAt(0))) {
+                    sub.add(1, new Constant(Double.valueOf((String) sub.get(1))));
+                    sub.remove(2);
+                }
             }
-                
+
             sub.remove(indexLevy);
             sub.remove(indexLevy + 1);//počítá s tím, že v arraylistu zbude pouze (operace)
         }
@@ -205,6 +222,6 @@ public class Operace extends Expr {
 
     @Override
     public boolean hasVar(char name) {
-       return vyraz1.hasVar(name)||vyraz2.hasVar(name);
+        return vyraz1.hasVar(name) || vyraz2.hasVar(name);
     }
 }
