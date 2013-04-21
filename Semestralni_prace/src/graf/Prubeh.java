@@ -42,7 +42,7 @@ public class Prubeh {
         for (double i = minimum; i <= maximum; i = i + krok) {
             BodGrafu k = new BodGrafu(i, exp);
             bod.add(k);
-        }
+        }       
         vykresli();
     }
 
@@ -63,15 +63,20 @@ public class Prubeh {
 
     private void vykresli() {
         int souradniceX1, souradniceX2, souradniceY1, souradniceY2;
+        double y1;
         souradniceX1 = Tools.sourToPx(bod.get(0).getX(), nulaX, krokX, Graf.getHodnotaDilku('x'));
         souradniceY1 = Tools.sourToPx(bod.get(0).getY(), nulaY, krokY, Graf.getHodnotaDilku('y'));
+        y1=bod.get(0).getY();
         for (int i = 1; i < bod.size(); i++) {
             souradniceX2 = Tools.sourToPx(bod.get(i).getX(), nulaX, krokX, Graf.getHodnotaDilku('x'));
             souradniceY2 = Tools.sourToPx(bod.get(i).getY(), nulaY, krokY, Graf.getHodnotaDilku('y'));
             g.setColor(barva);
-            g.drawLine(souradniceX1, souradniceY1, souradniceX2, souradniceY2);
+           
+             if(!Double.isInfinite(bod.get(i).getY())&& !Double.isNaN(bod.get(i).getY()) &&!Double.isInfinite(y1)&& !Double.isNaN(y1) ){
+            g.drawLine(souradniceX1, souradniceY1, souradniceX2, souradniceY2);}
             souradniceX1 = souradniceX2;
             souradniceY1 = souradniceY2;
+            y1=bod.get(i).getY();
 
         }
     }

@@ -13,6 +13,20 @@ import java.util.ArrayList;
  */
 public class Tools {
 
+    public static String arraylistToString(ArrayList list){
+    String out = list.toString();
+    out = out.replaceAll("p","pi");
+        out = out.replaceAll("s","sin");
+        out = out.replaceAll("c","cos");
+        out = out.replaceAll("o","sqrt");
+        out = out.replaceAll("l","ln");
+        out = out.replaceAll("d","log");
+        out=out.substring(1,out.length()-1);
+        out = out.replaceAll(",","");
+        out = out.replaceAll(".0","");
+        return out;
+    }
+    
     public static String nahradNepohodlne(String input) {
         //ošetření vícepísmených názvů funkcí
         input = input.replaceAll("pi", "p");
@@ -25,7 +39,7 @@ public class Tools {
         return input;
     }
 
-    public static void zkontrolujOperandy(ArrayList list) throws ChybiOperandExep {
+    public static void zkontrolujOperandy(ArrayList list) throws ChybiOperandExep {//TODO očetřit když jsou 2 operatory vedle sebe
         for (int i = 0; i < list.size(); i++) {
             String s = (String) list.get(i);
 

@@ -5,8 +5,16 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.SystemColor;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
+import javax.swing.UIManager;
 
 /**
  *
@@ -21,12 +29,15 @@ public class Graf extends javax.swing.JFrame {
     private static double hodnotaDilkuX, hodnotaDilkuY;
     private double jemnost;
     private Expr exp;
+    private String vyraz;
 
     /**
      * Creates new form Graf
      */
-    public Graf(Expr exp) {
+    public Graf(Expr exp, String vyraz) {
         this.exp = exp;
+        this.vyraz=vyraz;
+     
         initComponents();
         //Nastavení počátečních parametrů
         a = 0;//okraje stránky
@@ -60,9 +71,6 @@ public class Graf extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         vykreslovaciPlocha = new javax.swing.JPanel() {
             public void paint (Graphics g) {
                 super.paint(g);
@@ -85,31 +93,18 @@ public class Graf extends javax.swing.JFrame {
         chbxZoomX = new javax.swing.JCheckBox();
         chbxZoomY = new javax.swing.JCheckBox();
         chbxPosun = new javax.swing.JCheckBox();
+        btnUloz = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuClrGr = new javax.swing.JMenuItem();
         menuClrPop = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Graf");
         setAutoRequestFocus(false);
         setBackground(new java.awt.Color(255, 255, 255));
         setLocationByPlatform(true);
         setName("graf"); // NOI18N
-
-        jToolBar1.setFloatable(false);
-        jToolBar1.setBorderPainted(false);
-
-        jButton1.setText("Uložit");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
-
-        jButton2.setText("Tisk");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton2);
 
         vykreslovaciPlocha.setBackground(new java.awt.Color(255, 255, 255));
         vykreslovaciPlocha.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -148,7 +143,7 @@ public class Graf extends javax.swing.JFrame {
         vykreslovaciPlocha.setLayout(vykreslovaciPlochaLayout);
         vykreslovaciPlochaLayout.setHorizontalGroup(
             vykreslovaciPlochaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 611, Short.MAX_VALUE)
         );
         vykreslovaciPlochaLayout.setVerticalGroup(
             vykreslovaciPlochaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,7 +203,7 @@ public class Graf extends javax.swing.JFrame {
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Hodnota v bodě"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Hodnota"));
         jPanel3.setFocusable(false);
         jPanel3.setMinimumSize(new java.awt.Dimension(117, 65));
 
@@ -276,16 +271,27 @@ public class Graf extends javax.swing.JFrame {
         chbxPosun.setFocusPainted(false);
         chbxPosun.setFocusable(false);
 
+        btnUloz.setText("Uložit");
+        btnUloz.setFocusable(false);
+        btnUloz.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnUloz.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnUloz.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUlozActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chbxZoomX)
-                    .addComponent(chbxZoomY)
-                    .addComponent(chbxPosun))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(chbxZoomX, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chbxZoomY, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chbxPosun)
+                    .addComponent(btnUloz, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -296,7 +302,9 @@ public class Graf extends javax.swing.JFrame {
                 .addComponent(chbxZoomX)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chbxZoomY)
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addGap(44, 44, 44)
+                .addComponent(btnUloz, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Úpravy");
@@ -327,7 +335,6 @@ public class Graf extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(vykreslovaciPlocha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -340,8 +347,7 @@ public class Graf extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -424,6 +430,25 @@ public class Graf extends javax.swing.JFrame {
         vykreslovaciPlocha.repaint();
     }//GEN-LAST:event_vykreslovaciPlochaMouseExited
 
+    private void btnUlozActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUlozActionPerformed
+
+        JFileChooser chs = new JFileChooser();
+        chs.showSaveDialog(this);
+        File imgFile = chs.getSelectedFile();
+        BufferedImage im = new BufferedImage(vykreslovaciPlocha.getWidth(), vykreslovaciPlocha.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
+        Graphics obr = im.createGraphics();
+        obr.setColor(Color.white);
+        obr.fillRect(0, 0, im.getWidth(), im.getHeight());
+        kresli(obr);
+        obr.setColor(Color.black);
+        obr.drawString("y="+vyraz, vykreslovaciPlocha.getWidth()-200, vykreslovaciPlocha.getHeight()-20);
+        try {
+            ImageIO.write(im, "png", imgFile);
+        } catch (IOException ex) {
+            Logger.getLogger(Graf.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnUlozActionPerformed
+
     private void kresli(Graphics g) {
         if (mysUvnitr) {
             if (chbxZobrazitKurzor.isSelected()) {
@@ -434,7 +459,7 @@ public class Graf extends javax.swing.JFrame {
                 vykreslovaciPlocha.setCursor(Cursor.getDefaultCursor());
             }
             if (chbxZobrazitBod.isSelected()) {
-                BodGrafu b = new BodGrafu(Tools.pxToSour(xMysiPosledni, nulaX, krokX, 'x', hodnotaDilkuX), nulaX, krokX, nulaY, krokY, g, v, barvaGrafu, hodnotaDilkuX, hodnotaDilkuY);
+                BodGrafu b = new BodGrafu(exp,Tools.pxToSour(xMysiPosledni, nulaX, krokX, 'x', hodnotaDilkuX), nulaX, krokX, nulaY, krokY, g, v, barvaGrafu, hodnotaDilkuX, hodnotaDilkuY);
                 lblPolX.setText(String.format("%.3f", b.getX()));
                 lblPolY.setText(String.format("%.3f", b.getY()));
             }
@@ -480,7 +505,7 @@ public class Graf extends javax.swing.JFrame {
             if (kolikatej % 5 == 0 && kolikatej != 0) {
                 g.setColor(barvaPismen);
                 g.drawLine(nulaX - velikostCarky, j, nulaX, j);
-                g.drawString(String.format("%.2f", kolikatej * hodnotaDilkuY), nulaX - 2 * velikostCarky - 9, j + 5);
+                g.drawString(String.format("%.2f", kolikatej * hodnotaDilkuY), nulaX + 2 * velikostCarky - 9, j + 5);
                 g.setColor(Color.black);
             } else {
                 g.drawLine(nulaX - (velikostCarky / 2), j, nulaX, j);
@@ -491,7 +516,7 @@ public class Graf extends javax.swing.JFrame {
             if (kolikatej % 5 == 0 && kolikatej != 0) {
                 g.setColor(barvaPismen);
                 g.drawLine(nulaX - velikostCarky, j, nulaX, j);
-                g.drawString("-" + String.format("%.2f", kolikatej * hodnotaDilkuY), nulaX - 2 * velikostCarky - 15, j + 5);
+                g.drawString("-" + String.format("%.2f", kolikatej * hodnotaDilkuY), nulaX + 2 * velikostCarky - 15, j + 5);
                 g.setColor(Color.black);
             } else {
                 g.drawLine(nulaX - (velikostCarky / 2), j, nulaX, j);
@@ -506,13 +531,12 @@ public class Graf extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnUloz;
     private javax.swing.JCheckBox chbxPosun;
     private javax.swing.JCheckBox chbxZobrazitBod;
     private javax.swing.JCheckBox chbxZobrazitKurzor;
     private javax.swing.JCheckBox chbxZoomX;
     private javax.swing.JCheckBox chbxZoomY;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
@@ -522,7 +546,6 @@ public class Graf extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblPolX;
     private javax.swing.JLabel lblPolY;
     private javax.swing.JMenuItem menuClrGr;

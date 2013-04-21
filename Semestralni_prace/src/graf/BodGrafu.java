@@ -23,7 +23,8 @@ public class BodGrafu {
         y = -1 * hodnotaVBode(x);
     }
 
-    public BodGrafu(double x, int nulaX, int krokX, int nulaY, int krokY, Graphics g, int velikost, Color barva, double hodnotaDilkuX, double hodnotaDilkuy) {
+    public BodGrafu(Expr exp,double x, int nulaX, int krokX, int nulaY, int krokY, Graphics g, int velikost, Color barva, double hodnotaDilkuX, double hodnotaDilkuy) {
+       this.exp = exp;
         this.x = x;
         y = hodnotaVBode(x);
         //System.out.println(x);

@@ -11,19 +11,23 @@ public class Vyraz {
 
     private String vyraz = new String();
     private ArrayList listLevy = new ArrayList();
-    private ArrayList listPravy = new ArrayList();
-    private boolean polynom;
+    private ArrayList listKopie = new ArrayList();
     private Expr e;
 
     public Vyraz() {
-        polynom = false;
     }
 
-    public void napln() throws ZavorkyExep{
-        e = Operace.zArrayListu(listLevy);
+    public void napln() throws ZavorkyExep {
+        listKopie = (ArrayList) listLevy.clone();
+        e = Operace.zArrayListu(listKopie);
+
     }
 
-    public String vyres() throws ZavorkyExep{
+    public boolean isEmpty() {
+        return listLevy.isEmpty();
+    }
+
+    public String vyres() throws ZavorkyExep {
         napln();
         return String.valueOf(e.evaluate(0));
     }
@@ -31,50 +35,58 @@ public class Vyraz {
     public void clear() {
         vyraz = "";
     }
-
-    public void pridej(String co) {
-
-        vyraz += co;
-        if ("X".equals(co) || "Y".equals(co)) {
-            polynom = true;
+    
+    public String unarMinus(){
+        if(Character.isDigit(((String)listLevy.get(listLevy.size()-1)).charAt(0))){
+        double cislo = Double.valueOf((String)listLevy.get(listLevy.size()-1))*(-1);
+        listLevy.set(listLevy.size()-1,String.valueOf(cislo) );
+        vyraz=Tools.arraylistToString(listLevy);
+        }else if(((String)listLevy.get(listLevy.size()-1)).charAt(0)=='-' ){
+            double cislo = Double.valueOf((String)listLevy.get(listLevy.size()-1))*(-1);
+        listLevy.set(listLevy.size()-1,String.valueOf(cislo) );
+        vyraz=Tools.arraylistToString(listLevy);
         }
         
-            listLevy = Tools.naplnArrayList(vyraz);
-       
-        // napln();
+     return vyraz;   
     }
 
-    private boolean poradPolynom() {
-        if (vyraz.indexOf("X") == -1 && vyraz.indexOf("Y") == -1) {
-            return false;
-        } else {
-            return true;
-        }
+    public void pridej(String co) {
+        vyraz += co;
+        listLevy = Tools.naplnArrayList(vyraz);
     }
 
     public void odeber() {
         if (vyraz.length() != 0) {
-            vyraz = vyraz.substring(0, vyraz.length() - 1);
+            if (((String) listLevy.get(listLevy.size() - 1)).charAt(0) == '(' && listLevy.size() != 1) {
+                switch (((String) listLevy.get(listLevy.size() - 2)).charAt(0)) {
+                    case ('o'):
+                        vyraz = vyraz.substring(0, vyraz.length() - 5);
+                        break;
+                    case ('s'):
+                    case ('c'):
+                    case ('d'):
+                        vyraz = vyraz.substring(0, vyraz.length() - 4);
+                        break;
+                    case ('l'):
+                    case ('p'):
+                        vyraz = vyraz.substring(0, vyraz.length() - 3);
+                        break;
+                    default:
+                        vyraz = vyraz.substring(0, vyraz.length() - 1);
+                }
+            } else {
+                vyraz = vyraz.substring(0, vyraz.length() - 1);
+            }
 
-            polynom = poradPolynom();
         }
-        
-            listLevy = Tools.naplnArrayList(vyraz);
-            listPravy.clear();
-        
-        //  napln();
+        listLevy = Tools.naplnArrayList(vyraz);
     }
 
     public String getVyraz() {
         return vyraz;
     }
 
-    public boolean isPolynom() {
-        return polynom;
-    }
-
-    public Expr getExpY() { //TODO vrátí vyjádřený Y
-
+    public Expr getExp() {
         return e;
     }
 }
