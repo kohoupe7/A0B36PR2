@@ -1,10 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package calc;
 
 import exeptions.ChybiOperandExep;
+import exeptions.ZnamenkaExep;
 import java.util.ArrayList;
 
 /**
@@ -13,20 +11,20 @@ import java.util.ArrayList;
  */
 public class Tools {
 
-    public static String arraylistToString(ArrayList list){
-    String out = list.toString();
-    out = out.replaceAll("p","pi");
-        out = out.replaceAll("s","sin");
-        out = out.replaceAll("c","cos");
-        out = out.replaceAll("o","sqrt");
-        out = out.replaceAll("l","ln");
-        out = out.replaceAll("d","log");
-        out=out.substring(1,out.length()-1);
-        out = out.replaceAll(",","");
-        out = out.replaceAll(".0","");
+    public static String arraylistToString(ArrayList list) {
+        String out = list.toString();
+        out = out.replaceAll("p", "pi");
+        out = out.replaceAll("s", "sin");
+        out = out.replaceAll("c", "cos");
+        out = out.replaceAll("o", "sqrt");
+        out = out.replaceAll("l", "ln");
+        out = out.replaceAll("d", "log");
+        out = out.substring(1, out.length() - 1);
+        out = out.replaceAll(",", "");
+        out = out.replaceAll(".0", "");
         return out;
     }
-    
+
     public static String nahradNepohodlne(String input) {
         //ošetření vícepísmených názvů funkcí
         input = input.replaceAll("pi", "p");
@@ -39,7 +37,7 @@ public class Tools {
         return input;
     }
 
-    public static void zkontrolujOperandy(ArrayList list) throws ChybiOperandExep {//TODO očetřit když jsou 2 operatory vedle sebe
+    public static void zkontrolujOperandy(ArrayList list) throws ChybiOperandExep, ZnamenkaExep {
         for (int i = 0; i < list.size(); i++) {
             String s = (String) list.get(i);
 
@@ -48,6 +46,10 @@ public class Tools {
                 case "-":
                     if (i == 0) {
                         list.add(0, "0");
+                    } else {
+                        if ("+".equals((String) list.get(i - 1)) || "-".equals((String) list.get(i - 1)) || "*".equals((String) list.get(i - 1)) || "/".equals((String) list.get(i - 1)) || "^".equals((String) list.get(i - 1))) {
+                            throw new ZnamenkaExep((String) list.get(i - 1) + " a " + (String) list.get(i));
+                        }
                     }
                 case "s":
                 case "c":
@@ -60,6 +62,10 @@ public class Tools {
                 case "!":
                     if (i == 0) {
                         throw new ChybiOperandExep((String) list.get(0));
+                    } else {
+                        if ("+".equals((String) list.get(i - 1)) || "-".equals((String) list.get(i - 1)) || "*".equals((String) list.get(i - 1)) || "/".equals((String) list.get(i - 1)) || "^".equals((String) list.get(i - 1))) {
+                            throw new ZnamenkaExep((String) list.get(i - 1) + " a " + (String) list.get(i));
+                        }
                     }
                     break;
                 case "o":
@@ -70,6 +76,10 @@ public class Tools {
                         throw new ChybiOperandExep((String) list.get(0));
                     } else if (i == list.size() - 1) {
                         throw new ChybiOperandExep((String) list.get(list.size() - 1));
+                    } else {
+                        if ("+".equals((String) list.get(i - 1)) || "-".equals((String) list.get(i - 1)) || "*".equals((String) list.get(i - 1)) || "/".equals((String) list.get(i - 1)) || "^".equals((String) list.get(i - 1))) {
+                            throw new ZnamenkaExep((String) list.get(i - 1) + " a " + (String) list.get(i));
+                        }
                     }
                     break;
             }

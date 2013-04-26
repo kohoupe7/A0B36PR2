@@ -3,6 +3,7 @@ package GUI;
 import exeptions.ChybiOperandExep;
 import exeptions.ZavorkyExep;
 import calc.Vyraz;
+import exeptions.ZnamenkaExep;
 import graf.Graf;
 import java.awt.SystemColor;
 import javax.swing.JOptionPane;
@@ -521,6 +522,8 @@ public class Semestralni_prace extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Chyba. " + e.getMessage(), "Chyba", JOptionPane.ERROR_MESSAGE);
         } catch (ChybiOperandExep e) {
             JOptionPane.showMessageDialog(this, "Chyba, nezadán operand u funkce " + e.getMessage(), "Chyba", JOptionPane.ERROR_MESSAGE);
+        } catch (ZnamenkaExep e) {
+            JOptionPane.showMessageDialog(this, "Chyba, zadány dvě znaménka vedle sebe " + e.getMessage(), "Chyba", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_btnRovnoAction
