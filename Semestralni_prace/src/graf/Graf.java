@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.SystemColor;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +13,6 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
-import javax.swing.UIManager;
 
 /**
  *
@@ -435,6 +433,7 @@ public class Graf extends javax.swing.JFrame {
         JFileChooser chs = new JFileChooser();
         chs.showSaveDialog(this);
         File imgFile = chs.getSelectedFile();
+        if(imgFile!=null){
         BufferedImage im = new BufferedImage(vykreslovaciPlocha.getWidth(), vykreslovaciPlocha.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
         Graphics obr = im.createGraphics();
         obr.setColor(Color.white);
@@ -446,7 +445,7 @@ public class Graf extends javax.swing.JFrame {
             ImageIO.write(im, "png", imgFile);
         } catch (IOException ex) {
             Logger.getLogger(Graf.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }}
     }//GEN-LAST:event_btnUlozActionPerformed
 
     private void kresli(Graphics g) {
