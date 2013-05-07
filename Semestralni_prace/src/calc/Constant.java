@@ -1,13 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package calc;
 
-/**
- *
- * @author petr
- */
 public class Constant extends Expr {
 
     private double hodnota;
@@ -23,7 +15,7 @@ public class Constant extends Expr {
 
     @Override
     public String toString() {
-        return String.format("%.3f", hodnota); // desetiná čárka/tečka ?
+        return String.format("%.3f", hodnota); 
     }
 
     @Override

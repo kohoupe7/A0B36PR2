@@ -1,18 +1,13 @@
-
 package calc;
 
 import exeptions.ChybiOperandExep;
 import exeptions.ZnamenkaExep;
 import java.util.ArrayList;
 
-/**
- *
- * @author petr
- */
 public class Tools {
 
-    public static String arraylistToString(ArrayList list) {
-        String out = list.toString();
+    public static String arraylistToString(ArrayList list) {// převádí z rozparsovaného ArrayListu zpět na String. To znamená zpět doplnit vícepísmenné operátory
+        String out = list.toString(); 
         out = out.replaceAll("p", "pi");
         out = out.replaceAll("s", "sin");
         out = out.replaceAll("c", "cos");
@@ -25,7 +20,7 @@ public class Tools {
         return out;
     }
 
-    public static String nahradNepohodlne(String input) {
+    public static String nahradNepohodlne(String input) {//převede vícepísmené názvy operátorů na jednopísmené
         //ošetření vícepísmených názvů funkcí
         input = input.replaceAll("pi", "p");
         input = input.replaceAll("sin", "s");
@@ -37,7 +32,7 @@ public class Tools {
         return input;
     }
 
-    public static void zkontrolujOperandy(ArrayList list) throws ChybiOperandExep, ZnamenkaExep {
+    public static void zkontrolujOperandy(ArrayList list) throws ChybiOperandExep, ZnamenkaExep {//kontrola zda všechny operátory mají co potřebujou
         for (int i = 0; i < list.size(); i++) {
             String s = (String) list.get(i);
 
@@ -87,7 +82,7 @@ public class Tools {
         }
     }
 
-    public static ArrayList naplnArrayList(String input) {
+    public static ArrayList naplnArrayList(String input) {//výraz ze stringu rozparsuje do ArrayListu
 
         boolean isDigit = false;
         ArrayList ret = new ArrayList();

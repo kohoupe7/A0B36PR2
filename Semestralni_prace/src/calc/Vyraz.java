@@ -3,10 +3,6 @@ package calc;
 import exeptions.ZavorkyExep;
 import java.util.ArrayList;
 
-/**
- *
- * @author Petr Kohout
- */
 public class Vyraz {
 
     private String vyraz = new String();
@@ -17,7 +13,7 @@ public class Vyraz {
     public Vyraz() {
     }
 
-    public void napln() throws ZavorkyExep {
+    public void napln() throws ZavorkyExep {//naplní instanci třídy Expr
         listKopie = (ArrayList) listLevy.clone();
         e = Operace.zArrayListu(listKopie);
 
@@ -35,19 +31,19 @@ public class Vyraz {
     public void clear() {
         vyraz = "";
     }
-    
-    public String unarMinus(){
-        if(Character.isDigit(((String)listLevy.get(listLevy.size()-1)).charAt(0))){
-        double cislo = Double.valueOf((String)listLevy.get(listLevy.size()-1))*(-1);
-        listLevy.set(listLevy.size()-1,String.valueOf(cislo) );
-        vyraz=Tools.arraylistToString(listLevy);
-        }else if(((String)listLevy.get(listLevy.size()-1)).charAt(0)=='-' ){
-            double cislo = Double.valueOf((String)listLevy.get(listLevy.size()-1))*(-1);
-        listLevy.set(listLevy.size()-1,String.valueOf(cislo) );
-        vyraz=Tools.arraylistToString(listLevy);
+
+    public String unarMinus() {
+        if (Character.isDigit(((String) listLevy.get(listLevy.size() - 1)).charAt(0))) {
+            double cislo = Double.valueOf((String) listLevy.get(listLevy.size() - 1)) * (-1);
+            listLevy.set(listLevy.size() - 1, String.valueOf(cislo));
+            vyraz = Tools.arraylistToString(listLevy);
+        } else if (((String) listLevy.get(listLevy.size() - 1)).charAt(0) == '-') {
+            double cislo = Double.valueOf((String) listLevy.get(listLevy.size() - 1)) * (-1);
+            listLevy.set(listLevy.size() - 1, String.valueOf(cislo));
+            vyraz = Tools.arraylistToString(listLevy);
         }
-        
-     return vyraz;   
+
+        return vyraz;
     }
 
     public void pridej(String co) {

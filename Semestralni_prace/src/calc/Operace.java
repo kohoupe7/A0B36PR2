@@ -24,7 +24,7 @@ public class Operace extends Expr {
     }
 
     @Override
-    public double evaluate(double x) {
+    public double evaluate(double x) {//vyhodnocení výrazu 
         double hodn1 = vyraz1.evaluate(x);
         double hodn2 = vyraz2.evaluate(x);
         double vysledek = 0;
@@ -79,9 +79,7 @@ public class Operace extends Expr {
     }
 
     public static Expr zArrayListu(ArrayList levy) throws ZavorkyExep, ChybiOperandExep {
-
-        return arrayListToOp(levy);
-
+        return arrayListToOp(levy);//převádí výraz rozparsovaný v ArrayListu na instanci třídy Expr
     }
 
     public static Expr arrayListToOp(ArrayList list) throws ZavorkyExep, ChybiOperandExep {
