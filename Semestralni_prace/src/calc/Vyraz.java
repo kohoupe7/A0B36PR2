@@ -83,6 +83,7 @@ public class Vyraz {
     }
 
     public Expr getExp() {
+        napln();
         return e;
     }
 }

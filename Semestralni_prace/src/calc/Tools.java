@@ -42,7 +42,7 @@ public class Tools {
                     if (i == 0) {
                         list.add(0, "0");
                     } else {
-                        if ("+".equals((String) list.get(i - 1)) || "-".equals((String) list.get(i - 1)) || "*".equals((String) list.get(i - 1)) || "/".equals((String) list.get(i - 1)) || "^".equals((String) list.get(i - 1))) {
+                        if ("+".equals((String) list.get(i - 1)) || "-".equals((String) list.get(i - 1)) || "*".equals((String) list.get(i - 1)) || "/".equals((String) list.get(i - 1)) || "^".equals((String) list.get(i - 1)) ||"(".equals((String) list.get(i - 1))||")".equals((String) list.get(i + 1))) {
                             throw new ZnamenkaExep((String) list.get(i - 1) + " a " + (String) list.get(i));
                         }
                     }
